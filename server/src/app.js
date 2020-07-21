@@ -39,6 +39,11 @@ app.post('/api/users', (req, res) => {
     }).then(() => res.end());
 });
 
+app.get('/api/users/tutors', (req, res) => {
+    db.getTutors()
+        .then(data => res.json(data));
+});
+
 app.get('/', (req, res) => res.redirect('http://localhost:3000'));
 
 module.exports = app;

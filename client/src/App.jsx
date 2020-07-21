@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import Auth from './components/Auth.jsx';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import UserForm from './components/UserForm.jsx';
+import TutorList from './components/TutorList.jsx';
+import Header from './components/Header.jsx';
 
 const App = () => {
     const [ authenticated, setAuthenticated ] = useState(false);
@@ -34,19 +35,24 @@ const App = () => {
 
     const home = authenticated && !profile
         ? <Redirect to='/create-profile' />
-        : <div>HELLO WORLD</div>;
+        : <div className='text-pink-500'>HELLO WORLD</div>;
 
     return (
         <BrowserRouter>
-            <Auth authenticated={authenticated} />
-            <Switch>
-                <Route exact path='/'>
-                    {home}
-                </Route>
-                <Route path='/create-profile'>
-                    <UserForm onSubmit={handleCreateProfile} hasProfile={profile} />
-                </Route>
-            </Switch>
+            <div className='container mx-auto px-2'>
+                <Header authenticated={authenticated} />
+                <Switch>
+                    <Route path='/tutors'>
+                        <TutorList />
+                    </Route>
+                    <Route exact path='/'>
+                        {home}
+                    </Route>
+                    <Route path='/create-profile'>
+                        <UserForm onSubmit={handleCreateProfile} hasProfile={profile} />
+                    </Route>
+                </Switch>
+            </div>
         </BrowserRouter>
     );
 };

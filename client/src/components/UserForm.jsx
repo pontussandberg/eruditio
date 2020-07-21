@@ -33,7 +33,7 @@ const UserForm = ({ onSubmit, hasProfile }) => {
 
     const handleSubmit = event => {
         event.preventDefault();
-        console.log(state);
+
         fetch('http://localhost:5000/api/users', {
             method: 'POST',
             body: JSON.stringify(state),
@@ -63,24 +63,3 @@ const UserForm = ({ onSubmit, hasProfile }) => {
 };
 
 export default UserForm;
-
-// const Form = () => {
-//     const [ input, setInput ] = useState({
-//         input1: '',
-//         input2: '',
-//     })
-
-//     const handleChange = event => {
-//         const { name, value } = event.target
-//         setInput({
-//             ...input,
-//             [name]: value,
-//         })
-//     }
-
-//     return (
-//         <form>
-//             <input onChange={handleChange} value={input} />
-//         </form>
-//     )
-// }
