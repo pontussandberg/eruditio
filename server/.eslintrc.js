@@ -33,6 +33,7 @@ module.exports = {
             'argsIgnorePattern': '^_',
         }],
         'object-curly-spacing': [ 'error', 'always' ],
+        'quotes': [ 'error', 'single' ],
         'semi': [ 'error', 'always' ],
     },
-}
+};

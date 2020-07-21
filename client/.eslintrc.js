@@ -3,6 +3,7 @@ module.exports = {
         browser: true,
         commonjs: true,
         es6: true,
+        node: true,
     },
     extends: [
         'eslint:recommended',
@@ -12,6 +13,7 @@ module.exports = {
         Atomics: 'readonly',
         SharedArrayBuffer: 'readonly',
     },
+    parser: 'babel-eslint',
     parserOptions: {
         ecmaVersion: 2018,
     },
@@ -35,6 +37,8 @@ module.exports = {
             'argsIgnorePattern': '^_',
         }],
         'object-curly-spacing': [ 'error', 'always' ],
+        'quotes': [ 'error', 'single' ],
         'semi': [ 'error', 'always' ],
+        'react/prop-types': 'off',
     },
-}
+};
