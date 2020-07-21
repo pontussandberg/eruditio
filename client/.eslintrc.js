@@ -3,6 +3,7 @@ module.exports = {
         browser: true,
         commonjs: true,
         es6: true,
+        node: true,
     },
     extends: [
         'eslint:recommended',
@@ -38,4 +39,4 @@ module.exports = {
         'object-curly-spacing': [ 'error', 'always' ],
         'semi': [ 'error', 'always' ],
     },
-}
+};

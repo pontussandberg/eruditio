@@ -13,8 +13,13 @@ app.use(cookieSession({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(cors({
+    origin: 'http://localhost:3000',
+    methods: 'GET',
+    credentials: true,
+}));
 
-app.get('/loo', (req, res) => res.send('hi'));
+app.get('/lol', (req, res) => res.json('hi'));
 
 app.get('/auth/google', passport.authenticate('google', { scope: [ 'openid' ] }));
 app.get('/auth/google/callback', passport.authenticate('google', {
