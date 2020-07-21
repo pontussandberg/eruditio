@@ -3,6 +3,7 @@ const cors = require('cors');
 const express = require('express');
 const cookieSession = require('cookie-session');
 const passport = require('./lib/passport');
+const { auth } = require('./routes');
 
 const app = express();
 
@@ -19,13 +20,12 @@ app.use(cors({
     credentials: true,
 }));
 
-app.get('/lol', (req, res) => res.json('hi'));
 
-app.get('/auth/google', passport.authenticate('google', { scope: [ 'openid' ] }));
-app.get('/auth/google/callback', passport.authenticate('google', {
-    successRedirect: 'http://localhost:3000',
-    failureRedirect: '/',
-}));
-app.get('/', (req, res) => res.end());
+app.use('/auth', auth);
+
+app.get('/getUser', (req, res) => {
+    res.json(req.user || false);
+});
+app.get('/', (req, res) => res.redirect('http://localhost:3000'));
 
 module.exports = app;
