@@ -21,7 +21,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors({
     origin: 'http://localhost:3000',
-    methods: 'GET, POST',
+    methods: 'GET,POST',
     credentials: true,
 }));
 
@@ -33,8 +33,10 @@ app.get('/api/users/me', (req, res) => {
 });
 
 app.post('/api/users', (req, res) => {
-    db.createUser(req.body)
-        .then(() => res.end());
+    db.createUser({
+        ...req.body,
+        id: req.user.id,
+    }).then(() => res.end());
 });
 
 app.get('/', (req, res) => res.redirect('http://localhost:3000'));

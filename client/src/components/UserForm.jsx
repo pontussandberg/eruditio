@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import Input from './Input';
-import DropDown from './DropDown';
+import { Redirect } from 'react-router-dom';
+import Input from './Input.jsx';
+import DropDown from './DropDown.jsx';
 
 const options = [
     { name: 'hello', value: 'underworld1' },
@@ -20,9 +21,8 @@ const subjects = [
     { name: 'Latin', value: 'latin' },
 ];
 
-const UserForm = () => {
+const UserForm = ({ onSubmit, hasProfile }) => {
     const [ state, setState ] = useState({});
-
     const handleChange = event => {
         const { name, value } = event.target;
         setState({
@@ -33,26 +33,33 @@ const UserForm = () => {
 
     const handleSubmit = event => {
         event.preventDefault();
+        console.log(state);
         fetch('http://localhost:5000/api/users', {
             method: 'POST',
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Credentials': true,
             body: JSON.stringify(state),
-        });
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Credentials': true,
+            },
+        })
+            .then(() => onSubmit());
     };
 
-    return (
-        <form>
-            <Input onChange={handleChange} label='Name' name='name' />
-            <Input onChange={handleChange} label='Last Name' name='last-name' />
-            <DropDown onChange={handleChange} label='Timezone' name='timezone' options={options} />
-            <DropDown onChange={handleChange} label='Role' name='role' options={roles} />
-            <DropDown onChange={handleChange} label='Subjects' name='subjects' multiple={true} options={subjects} />
-            <Input onChange={handleChange} label='Languages' name='languages' />
-            <Input onChange={handleChange} label='Contact' name='contact' />
-            <button onClick={handleSubmit} type='submit'>Create Profile</button>
-        </form>
-    );
+    return hasProfile
+        ? <Redirect to='/' />
+        : (
+            <form>
+                <Input onChange={handleChange} label='Name' name='name' />
+                <Input onChange={handleChange} label='Last Name' name='last-name' />
+                <DropDown onChange={handleChange} label='Timezone' name='timezone' options={options} />
+                <DropDown onChange={handleChange} label='Role' name='role' options={roles} />
+                <DropDown onChange={handleChange} label='Subjects' name='subjects' multiple={true} options={subjects} />
+                <Input onChange={handleChange} label='Languages' name='languages' />
+                <Input onChange={handleChange} label='Contact' name='contact' />
+                <button onClick={handleSubmit} type='submit'>Create Profile</button>
+            </form>
+        );
 };
 
 export default UserForm;
