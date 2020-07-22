@@ -1,12 +1,9 @@
 require('dotenv').config();
-// const cors = require('cors');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
-const shortid = require('shortid');
-const db = require('./lib/db');
 const passport = require('./lib/passport');
-const { auth } = require('./routes');
+const { auth, users } = require('./routes');
 
 const app = express();
 
@@ -20,36 +17,9 @@ app.use(cookieSession({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-// app.use(cors({
-//     origin: 'http://localhost:3000',
-//     methods: 'GET,POST',
-//     credentials: true,
-// }));
-
 
 app.use('/auth', auth);
-
-app.post('/api/users', (req, res) => {
-    db.createUser({
-        ...req.body,
-        id: req.user.id,
-        shortId: shortid.generate(),
-    }).then(() => res.end());
-});
-
-app.get('/api/users/me', (req, res) => {
-    res.json(req.user || false);
-});
-
-app.get('/api/users/tutors', (req, res) => {
-    db.getTutors()
-        .then(data => res.json(data));
-});
-
-app.get('/api/users/:id', (req, res) => {
-    db.getUserById(req.params.id.toString())
-        .then(data => res.json(data));
-});
+app.use('/api/users', users);
 
 app.get('/', (req, res) => res.redirect('http://localhost:3000'));
 

@@ -1,6 +1,5 @@
-const os = require('os')
-const http = require('http')
-const socketIO = require('socket.io')
+const http = require('http');
+const socketIO = require('socket.io');
 const app = require('./src/app.js');
 
 const server = http.createServer(app);
@@ -8,11 +7,16 @@ const server = http.createServer(app);
 const io = socketIO(server);
 const rooms = {};
 io.on('connection', socket => {
+
+    // has to die soon
+    socket.on('lol', () => {
+        console.log('LOL');
+    });
     socket.on('join room', roomID => {
         if (rooms[roomID]) {
             rooms[roomID].push(socket.id);
         } else {
-            rooms[roomID] = [socket.id];
+            rooms[roomID] = [ socket.id ];
         }
         const otherUser = rooms[roomID].find(id => id !== socket.id);
         if (otherUser) {
@@ -32,9 +36,6 @@ io.on('connection', socket => {
     socket.on('ice-candidate', payload => {
         io.to(payload.target).emit('ice-candidate', payload.candidate);
     });
-    
-})
-
-
+});
 
 server.listen(5000);
