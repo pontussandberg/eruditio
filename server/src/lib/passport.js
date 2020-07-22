@@ -23,5 +23,4 @@ passport.deserializeUser((id, done) => db.getUser(id)
 
 passport.use(googleStrategy);
 
-
 module.exports = passport;

@@ -12,13 +12,27 @@ module.exports = {
     devServer: {
         contentBase: './build',
         port: 3000,
+        historyApiFallback: true,
+        proxy: [{
+            context: [ '/api', '/auth' ],
+            target: 'http://localhost:5000',
+        }],
     },
     devtool: 'eval-source-map',
     mode: 'development',
     module: {
         rules: [{
             test: /\.css$/,
-            use: [ MiniCssExtractPlugin.loader, 'css-loader' ],
+            use: [ MiniCssExtractPlugin.loader, 'css-loader', {
+                loader: 'postcss-loader',
+                options: {
+                    ident: 'postcss',
+                    plugins: [
+                        require('tailwindcss'),
+                        require('autoprefixer'),
+                    ],
+                },
+            }],
         },
         {
             test: /\.(js|jsx)$/,
