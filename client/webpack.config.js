@@ -12,6 +12,11 @@ module.exports = {
     devServer: {
         contentBase: './build',
         port: 3000,
+        historyApiFallback: true,
+        proxy: [{
+            context: [ '/api', '/auth' ],
+            target: 'http://localhost:5000',
+        }],
     },
     devtool: 'eval-source-map',
     mode: 'development',

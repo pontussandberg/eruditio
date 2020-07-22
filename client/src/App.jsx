@@ -16,14 +16,14 @@ const App = () => {
     const handleCreateProfile = () => setProfile(true);
 
     useEffect(() => {
-        fetch('http://localhost:5000/api/users/me', {
+        fetch('/api/users/me', {
             method: 'GET',
-            credentials: 'include',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Credentials': true,
-            },
+            // credentials: 'include',
+            // headers: {
+            //     Accept: 'application/json',
+            //     'Content-Type': 'application/json',
+            //     'Access-Control-Allow-Credentials': true,
+            // },
         })
             .then(res => res.json())
             .then(data => data

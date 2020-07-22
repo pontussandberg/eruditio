@@ -1,5 +1,5 @@
 require('dotenv').config();
-const cors = require('cors');
+// const cors = require('cors');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
@@ -19,11 +19,11 @@ app.use(cookieSession({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(cors({
-    origin: 'http://localhost:3000',
-    methods: 'GET,POST',
-    credentials: true,
-}));
+// app.use(cors({
+//     origin: 'http://localhost:3000',
+//     methods: 'GET,POST',
+//     credentials: true,
+// }));
 
 
 app.use('/auth', auth);

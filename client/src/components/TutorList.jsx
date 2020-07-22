@@ -13,7 +13,7 @@ const TutorList = () => {
     const [ list, setList ] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:5000/api/users/tutors')
+        fetch('/api/users/tutors')
             .then(res => res.json())
             .then(res => setList(res))
             .catch(console.error);
