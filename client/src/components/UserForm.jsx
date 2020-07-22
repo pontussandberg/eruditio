@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import Input from './Input.jsx';
 import DropDown from './DropDown.jsx';
+import '../css/index.css';
 
 const options = [
     { name: 'hello', value: 'underworld1' },
@@ -34,14 +35,14 @@ const UserForm = ({ onSubmit, hasProfile }) => {
     const handleSubmit = event => {
         event.preventDefault();
 
-        fetch('http://localhost:5000/api/users', {
+        fetch('/api/users', {
             method: 'POST',
             body: JSON.stringify(state),
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Credentials': true,
-            },
+            // credentials: 'include',
+            // headers: {
+            //     'Content-Type': 'application/json',
+            //     'Access-Control-Allow-Credentials': true,
+            // },
         })
             .then(() => onSubmit());
     };

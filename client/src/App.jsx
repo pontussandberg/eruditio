@@ -3,6 +3,7 @@ import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import UserForm from './components/UserForm.jsx';
 import TutorList from './components/TutorList.jsx';
 import Header from './components/Header.jsx';
+import UserPage from './components/UserPage.jsx';
 
 const App = () => {
     const [ authenticated, setAuthenticated ] = useState(false);
@@ -42,9 +43,8 @@ const App = () => {
             <div className='container mx-auto px-2'>
                 <Header authenticated={authenticated} />
                 <Switch>
-                    <Route path='/tutors'>
-                        <TutorList />
-                    </Route>
+                    <Route path='/tutors' component={TutorList} />
+                    <Route path='/users/:id' component={UserPage} />
                     <Route exact path='/'>
                         {home}
                     </Route>

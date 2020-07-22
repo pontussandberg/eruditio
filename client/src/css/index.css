@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.view-button {
+    min-width: 96px;
+    max-width: 96px;
+    min-height: 40px;
+    max-height: 40px;
+}
