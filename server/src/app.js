@@ -3,6 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
+const shortid = require('shortid');
 const db = require('./lib/db');
 const passport = require('./lib/passport');
 const { auth } = require('./routes');
@@ -28,19 +29,25 @@ app.use(passport.session());
 
 app.use('/auth', auth);
 
-app.get('/api/users/me', (req, res) => {
-    res.json(req.user || false);
-});
-
 app.post('/api/users', (req, res) => {
     db.createUser({
         ...req.body,
         id: req.user.id,
+        shortId: shortid.generate(),
     }).then(() => res.end());
+});
+
+app.get('/api/users/me', (req, res) => {
+    res.json(req.user || false);
 });
 
 app.get('/api/users/tutors', (req, res) => {
     db.getTutors()
+        .then(data => res.json(data));
+});
+
+app.get('/api/users/:id', (req, res) => {
+    db.getUserById(req.params.id.toString())
         .then(data => res.json(data));
 });
 

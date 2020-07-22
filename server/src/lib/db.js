@@ -24,6 +24,14 @@ const getUser = id => {
         .finally(() => client.close());
 };
 
+const getUserById = shortId => {
+    const client = new MongoClient(mongoUri, mongoOpts);
+    return connect(client, 'users')
+        .then(col => col.findOne({ shortId }))
+        .then(res => res || {})
+        .finally(() => client.close());
+};
+
 const getTutors = () => {
     const client = new MongoClient(mongoUri, mongoOpts);
     return connect(client, 'users')
@@ -35,5 +43,6 @@ const getTutors = () => {
 module.exports = {
     createUser,
     getUser,
+    getUserById,
     getTutors,
 };
