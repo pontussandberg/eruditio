@@ -4,7 +4,9 @@ import ChatRoom from './components/ChatRoom.jsx';
 import UserForm from './components/UserForm.jsx';
 import TutorList from './components/TutorList.jsx';
 import Header from './components/Header.jsx';
+import Home from './components/Home.jsx';
 import UserPage from './components/UserPage.jsx';
+import CreateRoom from './components/CreateRoom.jsx';
 
 const App = () => {
     const [ authenticated, setAuthenticated ] = useState(false);
@@ -37,7 +39,7 @@ const App = () => {
 
     const home = authenticated && !profile
         ? <Redirect to='/create-profile' />
-        : <div className='text-pink-500'>HELLO WORLD</div>;
+        : <Home />;
 
     return (
         <BrowserRouter>
@@ -52,9 +54,8 @@ const App = () => {
                     <Route path='/create-profile'>
                         <UserForm onSubmit={handleCreateProfile} hasProfile={profile} />
                     </Route>
-                    <Route path='/room'>
-                        <ChatRoom />
-                    </Route>
+                    <Route exact path='/room' component={CreateRoom} />
+                    <Route path='/room/:id' component={ChatRoom} />
                 </Switch>
             </div>
         </BrowserRouter>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import ProfileSection from './ProfileSection.jsx';
 
 const createList = (tutors) => (
     <section className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'>
@@ -16,14 +17,8 @@ const mapTutor = (x) => (
             >View pofile
             </Link>
         </div>
-        <div className='my-2'>
-            <h3 className='text-xl'>Subjects</h3>
-            <p>{x.subjects}</p>
-        </div>
-        <div>
-            <h3 className='text-xl'>Languages</h3>
-            <p>{x.languages}</p>
-        </div>
+        <ProfileSection title='Subjects' content={x.subjects} />
+        <ProfileSection title='Languages' content={x.languages} />
     </div>
 );
 
