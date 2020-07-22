@@ -38,11 +38,11 @@ const UserForm = ({ onSubmit, hasProfile }) => {
         fetch('/api/users', {
             method: 'POST',
             body: JSON.stringify(state),
-            // credentials: 'include',
-            // headers: {
-            //     'Content-Type': 'application/json',
-            //     'Access-Control-Allow-Credentials': true,
-            // },
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Credentials': true,
+            },
         })
             .then(() => onSubmit());
     };

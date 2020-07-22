@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+import ChatRoom from './components/ChatRoom.jsx';
 import UserForm from './components/UserForm.jsx';
 import TutorList from './components/TutorList.jsx';
 import Header from './components/Header.jsx';
@@ -50,6 +51,9 @@ const App = () => {
                     </Route>
                     <Route path='/create-profile'>
                         <UserForm onSubmit={handleCreateProfile} hasProfile={profile} />
+                    </Route>
+                    <Route path='/room'>
+                        <ChatRoom />
                     </Route>
                 </Switch>
             </div>
