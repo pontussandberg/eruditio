@@ -1,11 +1,11 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function Button({ text, path, classes = '' }) {
     return (
         <Link
-        className={`hover:bg-blue-400 bg-blue-600 text-white p-2 rounded ${classes}`}
-        to={path}
+            className={`hover:bg-blue-400 bg-blue-600 text-white p-2 rounded ${classes}`}
+            to={path}
         >
             {text}
         </Link>

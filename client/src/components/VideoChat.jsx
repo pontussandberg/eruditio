@@ -128,7 +128,7 @@ const VideoChat = ({ id }) => {
                 socketRef.current.on('ice-candidate', handleNewICECandidateMsg);
                 socketRef.current.on('user left', () => console.log('User left'));
             });
-            return handleHangup;
+        return handleHangup;
     }, []);
 
     return (

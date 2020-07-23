@@ -17,6 +17,11 @@ module.exports = {
     parserOptions: {
         ecmaVersion: 2018,
     },
+    settings: {
+        react: {
+            version: 'detect',
+        },
+    },
     rules: {
         'array-bracket-spacing': [ 'error', 'always', {
             objectsInArrays: false,

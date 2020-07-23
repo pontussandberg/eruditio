@@ -6,14 +6,14 @@ import Button from './buttons/Button.jsx';
 const Connections = ({ authenticated, profile }) => {
 
 
-    if(!authenticated) return <Redirect to='/' />
-    if(!profile.hasProfile) return <Redirect to='/create-profile' />
+    if(!authenticated) return <Redirect to='/' />;
+    if(!profile.hasProfile) return <Redirect to='/create-profile' />;
 
     return (
         <section>
             <Button text='Start the Lesson' path={`/room/${uuid()}`} />
         </section>
     );
-}
+};
 
 export default Connections;

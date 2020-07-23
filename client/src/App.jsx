@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import Classroom from './components/Classroom.jsx';
-import Connections from './components/Connections.jsx'
+import Connections from './components/Connections.jsx';
 import Header from './components/Header.jsx';
 import Home from './components/Home.jsx';
 import UserForm from './components/UserForm.jsx';
@@ -11,7 +11,7 @@ import TutorList from './components/TutorList.jsx';
 const App = () => {
     const [ authenticated, setAuthenticated ] = useState(false);
     const [ hasProfile, setHasProfile ] = useState(false);
-    const [profileData, setProfileData] = useState({});
+    const [ profileData, setProfileData ] = useState({});
 
     const setProfileInfo = data => {
         setHasProfile(data.hasProfile);
