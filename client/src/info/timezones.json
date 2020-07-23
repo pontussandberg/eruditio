@@ -1,0 +1,85 @@
+[{
+    "name": "UTC +0 (London)",
+    "value": "utc+0"
+}, {
+    "name": "UTC +1 (Berlin)",
+    "value": "utc+1"
+}, {
+    "name": "UTC +2 (Helsinki)",
+    "value": "utc+2"
+}, {
+    "name": "UTC +3 (Moscow)",
+    "value": "utc+3"
+}, {
+    "name": "UTC +4 (Dubai)",
+    "value": "utc+4"
+}, {
+    "name": "UTC +4:30 (Kabul)",
+    "value": "utc+4.5"
+}, {
+    "name": "UTC +5 (Yekaterinburg)",
+    "value": "utc+5"
+}, {
+    "name": "UTC +5:30 (Colombo)",
+    "value": "utc+5.5"
+}, {
+    "name": "UTC +6 (Almaty)",
+    "value": "utc+6"
+}, {
+    "name": "UTC +7 (Jakarta)",
+    "value": "utc+7"
+}, {
+    "name": "UTC +8 (Hong Kong)",
+    "value": "utc+8"
+}, {
+    "name": "UTC +9 (Seoul)",
+    "value": "utc+9"
+}, {
+    "name": "UTC +10 (Sydney)",
+    "value": "utc+10"
+}, {
+    "name": "UTC +11 (Norfolk)",
+    "value": "utc+11"
+}, {
+    "name": "UTC +12 (Fiji)",
+    "value": "utc+12"
+}, {
+    "name": "UTC +13 (Apia)",
+    "value": "utc+13"
+}, {
+    "name": "UTC +14 (Kiritimati)",
+    "value": "utc+14"
+}, {
+    "name": "UTC -1 (Azores)",
+    "value": "utc-1"
+}, {
+    "name": "UTC -2 (South Georgia)",
+    "value": "utc-2"
+}, {
+    "name": "UTC -3 (Buenos Aires)",
+    "value": "utc-3"
+}, {
+    "name": "UTC -4 (Barbados)",
+    "value": "utc-4"
+}, {
+    "name": "UTC -5 (Detroit)",
+    "value": "utc-5"
+}, {
+    "name": "UTC -6 (Chicago)",
+    "value": "utc-6"
+}, {
+    "name": "UTC -7 (Denver)",
+    "value": "utc-7"
+}, {
+    "name": "UTC -8 (Los Angeles)",
+    "value": "utc-8"
+}, {
+    "name": "UTC -9 (Anchorage)",
+    "value": "utc-9"
+}, {
+    "name": "UTC -10 (Honolulu)",
+    "value": "utc-10"
+}, {
+    "name": "UTC -11 (Pago Pago)",
+    "value": "utc-11"
+}]

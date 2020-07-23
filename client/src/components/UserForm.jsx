@@ -1,26 +1,11 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
+import Button from './buttons/Button.jsx';
 import Input from './Input.jsx';
 import DropDown from './DropDown.jsx';
 import '../css/index.css';
-
-const timezones = [
-    { name: 'hello', value: 'underworld1' },
-    { name: 'hello1', value: 'underworld2' },
-    { name: 'hello2', value: 'underworld3' },
-    { name: 'hello3', value: 'underworld4' },
-];
-
-const roles = [
-    { name: 'Tutor', value: 'tutor' },
-    { name: 'Student', value: 'student' },
-];
-
-const subjects = [
-    { name: 'Maths', value: 'maths' },
-    { name: 'English', value: 'english' },
-    { name: 'Latin', value: 'latin' },
-];
+import roles from '../info/roles.json';
+import timezones from '../info/timezones.json';
 
 const UserForm = ({ onSubmit, hasProfile }) => {
     const [ state, setState ] = useState({});
@@ -50,16 +35,34 @@ const UserForm = ({ onSubmit, hasProfile }) => {
     return hasProfile
         ? <Redirect to='/' />
         : (
-            <form>
-                <Input onChange={handleChange} label='Name' name='name' />
-                <Input onChange={handleChange} label='Last Name' name='last-name' />
-                <DropDown onChange={handleChange} label='Timezone' name='timezone' options={timezones} />
-                <DropDown onChange={handleChange} label='Role' name='role' options={roles} />
-                <DropDown onChange={handleChange} label='Subjects' name='subjects' multiple={true} options={subjects} />
-                <Input onChange={handleChange} label='Languages' name='languages' />
-                <Input onChange={handleChange} label='Contact' name='contact' />
-                <button onClick={handleSubmit} type='submit'>Create Profile</button>
-            </form>
+            <div className='flex justify-center'>
+                <form className='flex flex-col flex-wrap items-center'>
+                    <section className='mb-8 ml-4 self-start'>
+                        <h2 className='text-2xl'>Create a User Profile</h2>
+                        <p className='text-sm text-gray-700'>Tell us about you and your interests.</p>
+                    </section>
+                    <div className='flex flex-wrap flex-col'>
+                        <div className='flex flex-wrap justify-center'>
+                            <Input onChange={handleChange} label='Name' name='name' />
+                            <Input onChange={handleChange} label='Last Name' name='last-name' />
+                        </div>
+                        <div className='flex flex-wrap justify-center'>
+                            <Input onChange={handleChange} label='Languages' name='languages' />
+                            <Input onChange={handleChange} label='Contact' name='contact' />
+                        </div>
+                    </div>
+                    <div className='flex flex-wrap justify-center'>
+                        <Input onChange={handleChange} label='Subjects' name='subjects' />
+                        <Input onChange={handleChange} label='About me' name='about' />
+                    </div>
+                    <div className='flex flex-wrap justify-center'>
+                        <DropDown onChange={handleChange} label='Timezone' name='timezone' options={timezones} init='Select your timezone' />
+                        <DropDown onChange={handleChange} label='Role' name='role' options={roles} init='Select your role' />
+                    </div>
+
+                    <Button onClick={handleSubmit} text='Create profile' classes='w-56 mt-6' type='submit'>Create Profile</Button>
+                </form>
+            </div>
         );
 };
 

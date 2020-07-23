@@ -20,9 +20,10 @@ const handleGetMe =  (req, res) => {
             contact: req.user.contact,
             languages: req.user.languages,
             subjects: req.user.subjects,
-            shortId: req.user.shortid,
+            shortId: req.user.shortId,
             hasProfile: req.user.hasProfile,
-        }
+            about: req.user.about,
+        };
     res.json(response);
 };
 

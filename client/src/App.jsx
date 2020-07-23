@@ -38,7 +38,7 @@ const App = () => {
     return (
         <BrowserRouter>
             <div className='container mx-auto px-2'>
-                <Header authenticated={authenticated} />
+                <Header authenticated={authenticated} user={profileData} />
                 <Switch>
                     <Route path='/tutors' component={TutorList} />
                     <Route path='/users/:id' component={UserPage} />

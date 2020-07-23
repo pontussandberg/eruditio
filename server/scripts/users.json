@@ -1,0 +1,51 @@
+[{
+    "name" : "Clara",
+    "last-name" : "Lavinsky",
+    "languages" : "English, Mandarin, Mongolian",
+    "contact" : "thisisafakeemail@fake.fake",
+    "subjects" : "Quantum Physics, Zoology",
+    "about" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Odio morbi quis commodo odio aenean sed adipiscing diam donec. Vivamus arcu felis bibendum ut tristique.",
+    "timezone" : "utc+4",
+    "role" : "tutor",
+    "shortId" : "jvfdsv40W9" 
+}, {
+    "name" : "Peter",
+    "last-name" : "Yarmanov",
+    "languages" : "English, French, Italian",
+    "contact" : "thisisalsoafakeemail@fake.fake",
+    "subjects" : "French, Italian, Latin, Greek",
+    "about" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Odio morbi quis commodo odio aenean sed adipiscing diam donec. Vivamus arcu felis bibendum ut tristique.",
+    "timezone" : "utc+1",
+    "role" : "tutor",
+    "shortId" : "jvfdgfdd9" 
+}, {
+    "name" : "Jack",
+    "last-name" : "Peterson",
+    "languages" : "English, Spanish",
+    "contact" : "jack.peterson@fake.fake",
+    "subjects" : "Maths, JavaScript",
+    "about" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Odio morbi quis commodo odio aenean sed adipiscing diam donec. Vivamus arcu felis bibendum ut tristique.",
+    "timezone" : "utc+2",
+    "role" : "tutor",
+    "shortId" : "jvfds640W9" 
+}, {
+    "name" : "Diana",
+    "last-name" : "López",
+    "languages" : "Catalan, Spanish, English, Euskera",
+    "contact" : "soyunfake@fake.fake",
+    "subjects" : "Maths, Physics, Chemistry",
+    "about" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Odio morbi quis commodo odio aenean sed adipiscing diam donec. Vivamus arcu felis bibendum ut tristique.",
+    "timezone" : "utc+1",
+    "role" : "tutor",
+    "shortId" : "jvfdsv45W9" 
+}, {
+    "name" : "John",
+    "last-name" : "Martin",
+    "languages" : "Spanish, English, French",
+    "contact" : "johnmartin@fake.fake",
+    "subjects" : "Physics, Chemistry",
+    "about" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Odio morbi quis commodo odio aenean sed adipiscing diam donec. Vivamus arcu felis bibendum ut tristique.",
+    "timezone" : "utc+1",
+    "role" : "tutor",
+    "shortId" : "jvffsv45W9" 
+}]
