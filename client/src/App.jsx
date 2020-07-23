@@ -22,17 +22,8 @@ const App = () => {
     const handleCreateProfile = () => setHasProfile(true);
 
     useEffect(() => {
-        fetch('/api/users/me', {
-            method: 'GET',
-            // credentials: 'include',
-            // headers: {
-            //     Accept: 'application/json',
-            //     'Content-Type': 'application/json',
-            //     'Access-Control-Allow-Credentials': true,
-            // },
-        })
+        fetch('/api/users/me')
             .then(res => res.json())
-            .then(x => console.log(x) || x)
             .then(data => data
                 ? setProfileInfo(data)
                 : setAuthenticated(false)

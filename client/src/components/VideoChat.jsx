@@ -110,13 +110,10 @@ const VideoChat = ({ id }) => {
                 userVideo.current.srcObject = stream;
                 userStream.current = stream;
                 socketRef.current = io.connect('http://localhost:5000');
-                socketRef.current.on('connect', () => console.log('something'));
-
-                socketRef.current.emit('lol');
 
                 socketRef.current.emit('join room', id);
 
-                socketRef.current.on('other user', userID => {
+                socketRef.current.on('room full', userID => {
                     callUser(userID);
                     otherUser.current = userID;
                 });

@@ -7,20 +7,16 @@ const server = http.createServer(app);
 const io = socketIO(server);
 const rooms = {};
 io.on('connection', socket => {
-
-    // has to die soon
-    socket.on('lol', () => {
-        console.log('LOL');
-    });
     socket.on('join room', roomID => {
         if (rooms[roomID]) {
             rooms[roomID].push(socket.id);
         } else {
             rooms[roomID] = [ socket.id ];
         }
+        socket.room = roomID;
         const otherUser = rooms[roomID].find(id => id !== socket.id);
         if (otherUser) {
-            socket.emit('other user', otherUser);
+            socket.emit('room full', otherUser);
             socket.to(otherUser).emit('user joined', socket.id);
         }
     });
@@ -37,12 +33,13 @@ io.on('connection', socket => {
         io.to(payload.target).emit('ice-candidate', payload.candidate);
     });
 
-    socket.on('leave room', roomID => {
-        if (rooms[roomID]) rooms[roomID] = rooms[roomID]
-            .filter(id => id !== socket.id);
-        const peer = rooms[roomID][0];
+    socket.on('leave room', () => socket.disconnect(true));
+
+    socket.on('disconnect', () => {
+        if(!rooms[socket.room]) return;
+
+        const peer = rooms[socket.room].find(user => user !== socket.id);
         if (peer !== undefined) socket.to(peer).emit('user left');
-        socket.disconnect(true);
     });
 });
 
