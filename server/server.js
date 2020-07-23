@@ -36,6 +36,14 @@ io.on('connection', socket => {
     socket.on('ice-candidate', payload => {
         io.to(payload.target).emit('ice-candidate', payload.candidate);
     });
+
+    socket.on('leave room', roomID => {
+        if (rooms[roomID]) rooms[roomID] = rooms[roomID]
+            .filter(id => id !== socket.id);
+        const peer = rooms[roomID][0];
+        if (peer !== undefined) socket.to(peer).emit('user left');
+        socket.disconnect(true);
+    });
 });
 
 server.listen(5000);

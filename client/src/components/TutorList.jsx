@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ProfileSection from './ProfileSection.jsx';
+import Button from './buttons/Button.jsx';
 
 const createList = (tutors) => (
     <section className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'>
@@ -11,11 +12,7 @@ const mapTutor = (x) => (
     <div className='shadow p-6 rounded' key={x.id} >
         <div className='flex justify-between'>
             <h2 className='text-2xl font-semibold'>{x.name} {x['last-name']}</h2>
-            <Link
-                className='hover:bg-blue-400 bg-blue-600 text-white p-2 rounded ml-2 view-button'
-                to={`/users/${x.shortId}`}
-            >View pofile
-            </Link>
+            <Button path={`/users/${x.shortId}`} classes='ml-2 view-button' text='View profile' />
         </div>
         <ProfileSection title='Subjects' content={x.subjects} />
         <ProfileSection title='Languages' content={x.languages} />

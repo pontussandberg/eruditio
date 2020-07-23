@@ -4,7 +4,7 @@ import Input from './Input.jsx';
 import DropDown from './DropDown.jsx';
 import '../css/index.css';
 
-const options = [
+const timezones = [
     { name: 'hello', value: 'underworld1' },
     { name: 'hello1', value: 'underworld2' },
     { name: 'hello2', value: 'underworld3' },
@@ -53,7 +53,7 @@ const UserForm = ({ onSubmit, hasProfile }) => {
             <form>
                 <Input onChange={handleChange} label='Name' name='name' />
                 <Input onChange={handleChange} label='Last Name' name='last-name' />
-                <DropDown onChange={handleChange} label='Timezone' name='timezone' options={options} />
+                <DropDown onChange={handleChange} label='Timezone' name='timezone' options={timezones} />
                 <DropDown onChange={handleChange} label='Role' name='role' options={roles} />
                 <DropDown onChange={handleChange} label='Subjects' name='subjects' multiple={true} options={subjects} />
                 <Input onChange={handleChange} label='Languages' name='languages' />

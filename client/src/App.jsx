@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
-import ChatRoom from './components/ChatRoom.jsx';
-import UserForm from './components/UserForm.jsx';
-import TutorList from './components/TutorList.jsx';
+import Classroom from './components/Classroom.jsx';
+import Connections from './components/Connections.jsx'
 import Header from './components/Header.jsx';
 import Home from './components/Home.jsx';
+import UserForm from './components/UserForm.jsx';
 import UserPage from './components/UserPage.jsx';
-import CreateRoom from './components/CreateRoom.jsx';
+import TutorList from './components/TutorList.jsx';
 
 const App = () => {
     const [ authenticated, setAuthenticated ] = useState(false);
-    const [ profile, setProfile ] = useState(false);
+    const [ hasProfile, setHasProfile ] = useState(false);
+    const [profileData, setProfileData] = useState({});
 
-    const setAuthInfo = data => {
-        setProfile(data.hasProfile);
+    const setProfileInfo = data => {
+        setHasProfile(data.hasProfile);
         setAuthenticated(true);
+        setProfileData(data);
     };
 
-    const handleCreateProfile = () => setProfile(true);
+    const handleCreateProfile = () => setHasProfile(true);
 
     useEffect(() => {
         fetch('/api/users/me', {
@@ -30,14 +32,15 @@ const App = () => {
             // },
         })
             .then(res => res.json())
+            .then(x => console.log(x) || x)
             .then(data => data
-                ? setAuthInfo(data)
+                ? setProfileInfo(data)
                 : setAuthenticated(false)
             )
             .catch(console.error);
     }, []);
 
-    const home = authenticated && !profile
+    const home = authenticated && !hasProfile
         ? <Redirect to='/create-profile' />
         : <Home />;
 
@@ -52,10 +55,12 @@ const App = () => {
                         {home}
                     </Route>
                     <Route path='/create-profile'>
-                        <UserForm onSubmit={handleCreateProfile} hasProfile={profile} />
+                        <UserForm onSubmit={handleCreateProfile} hasProfile={hasProfile} />
                     </Route>
-                    <Route exact path='/room' component={CreateRoom} />
-                    <Route path='/room/:id' component={ChatRoom} />
+                    <Route path='/connections'>
+                        <Connections authenticated={authenticated} profile={profileData}/>
+                    </Route>
+                    <Route path='/room/:id' component={Classroom} />
                 </Switch>
             </div>
         </BrowserRouter>

@@ -10,6 +10,7 @@ module.exports = {
         publicPath: '/',
     },
     devServer: {
+        hot: true,
         contentBase: './build',
         port: 3000,
         historyApiFallback: true,

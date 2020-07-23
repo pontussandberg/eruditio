@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../media/logo.svg';
+import logo from '../media/logo2.svg';
 
 const Home = () => (
     <section>

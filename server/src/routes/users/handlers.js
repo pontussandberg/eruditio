@@ -10,7 +10,20 @@ const handlePostUser = (req, res) => {
 };
 
 const handleGetMe =  (req, res) => {
-    res.json(req.user || false);
+    const response = req.user === undefined
+        ? false
+        : {
+            name: req.user.name,
+            lastName: req.user['last-name'],
+            role: req.user.role,
+            timezone: req.user.timezone,
+            contact: req.user.contact,
+            languages: req.user.languages,
+            subjects: req.user.subjects,
+            shortId: req.user.shortid,
+            hasProfile: req.user.hasProfile,
+        }
+    res.json(response);
 };
 
 const handleGetTutors = (req, res) => {

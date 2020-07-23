@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import io from 'socket.io-client';
 
 
-const ChatRoom = ({ match: { params: { id } } }) => {
+const VideoChat = ({ id }) => {
     const userVideo = useRef();
     const otherVideo = useRef();
     const peerRef = useRef();
@@ -97,6 +97,13 @@ const ChatRoom = ({ match: { params: { id } } }) => {
         otherVideo.current.srcObject = e.streams[0];
     };
 
+    const handleHangup = () => {
+        userStream.current.getTracks()
+            .forEach(x => x.stop());
+        if (peerRef.current) peerRef.current.close();
+        socketRef.current.emit('leave room', id);
+    };
+
     useEffect(() => {
         navigator.mediaDevices.getUserMedia({ audio: false, video: true })
             .then(stream => {
@@ -119,15 +126,20 @@ const ChatRoom = ({ match: { params: { id } } }) => {
                 socketRef.current.on('offer', handleRecieveCall);
                 socketRef.current.on('answer', handleAnswer);
                 socketRef.current.on('ice-candidate', handleNewICECandidateMsg);
+                socketRef.current.on('user left', () => console.log('User left'));
             });
+            return handleHangup;
     }, []);
 
     return (
         <div>
             <video autoPlay ref={userVideo} />
             <video autoPlay ref={otherVideo} />
+            <button onClick={handleHangup}>Hangup</button>
+            {/* <button onClick={() => console.log(userStream.current)}>userStream</button>
+            <button onClick={() => console.log(userStream.current.getTracks())}><br /> getTracks()</button> */}
         </div>
     );
 };
 
-export default ChatRoom;
+export default VideoChat;

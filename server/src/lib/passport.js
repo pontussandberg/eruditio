@@ -3,6 +3,11 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 const userExists = doc => doc.hasOwnProperty('id');
+const populateUser = id => doc => ({
+    id,
+    ...doc,
+    hasProfile: userExists(doc),
+});
 
 const googleStrategy = new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT,
@@ -16,8 +21,8 @@ passport.serializeUser((profile, done) => {
 });
 
 passport.deserializeUser((id, done) => db.getUser(id)
-    .then(userExists)
-    .then(bool => done(null, { id, hasProfile: bool }))
+    .then(populateUser(id))
+    .then(user => done(null, user))
     .catch(console.error)
 );
 
