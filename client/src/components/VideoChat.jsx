@@ -1,8 +1,8 @@
 import React, { useRef, useEffect } from 'react';
 import io from 'socket.io-client';
+import hangUp from '../media/end-call.svg';
 
-
-const VideoChat = ({ id }) => {
+const VideoChat = ({ id, onRemoveVideo }) => {
     const userVideo = useRef();
     const otherVideo = useRef();
     const peerRef = useRef();
@@ -21,6 +21,10 @@ const VideoChat = ({ id }) => {
         const peer = new RTCPeerConnection({
             iceServers: [{
                 urls: 'stun:stun.stunprotocol.org',
+            }, {
+                urls: 'turn:numb.viagenie.ca',
+                credential: 'muazkh',
+                username: 'webrtc@live.com',
             }],
         });
 
@@ -102,10 +106,11 @@ const VideoChat = ({ id }) => {
             .forEach(x => x.stop());
         if (peerRef.current) peerRef.current.close();
         socketRef.current.emit('leave room', id);
+        onRemoveVideo();
     };
 
     useEffect(() => {
-        navigator.mediaDevices.getUserMedia({ audio: false, video: true })
+        navigator.mediaDevices.getUserMedia({ audio: true, video: true })
             .then(stream => {
                 userVideo.current.srcObject = stream;
                 userStream.current = stream;
@@ -123,18 +128,18 @@ const VideoChat = ({ id }) => {
                 socketRef.current.on('offer', handleRecieveCall);
                 socketRef.current.on('answer', handleAnswer);
                 socketRef.current.on('ice-candidate', handleNewICECandidateMsg);
-                socketRef.current.on('user left', () => console.log('User left'));
+                socketRef.current.on('user left', () => otherVideo.current.srcObject = null);
             });
         return handleHangup;
     }, []);
 
     return (
-        <div>
-            <video autoPlay ref={userVideo} />
+        <div className='bg-black flex flex-grow justify-center relative min-h-1 max-w-1'>
+            <video autoPlay ref={userVideo} className='absolute top-1 right-1 w-1/5 h-1/5' muted='muted' />
             <video autoPlay ref={otherVideo} />
-            <button onClick={handleHangup}>Hangup</button>
-            {/* <button onClick={() => console.log(userStream.current)}>userStream</button>
-            <button onClick={() => console.log(userStream.current.getTracks())}><br /> getTracks()</button> */}
+            <button onClick={handleHangup} className='absolute m-auto bottom-1'>
+                <img src={hangUp} />
+            </button>
         </div>
     );
 };
