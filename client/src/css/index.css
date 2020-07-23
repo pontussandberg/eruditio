@@ -32,3 +32,12 @@
 .max-w-1 {
     max-width: 600px;
 }
+
+.select-bg {
+    background-repeat: no-repeat;
+    background-position-x: 97%;
+    background-position-y: center;
+    background-size: 20px;
+
+    background-image: url('../media/down-arrow.svg')
+}

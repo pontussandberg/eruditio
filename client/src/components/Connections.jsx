@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
-import Button from './buttons/Button.jsx';
+import ButtonLink from './buttons/ButtonLink.jsx';
 
 const Connections = ({ authenticated, profile }) => {
 
@@ -11,7 +11,7 @@ const Connections = ({ authenticated, profile }) => {
 
     return (
         <section>
-            <Button text='Start the Lesson' path={`/room/${uuid()}`} />
+            <ButtonLink text='Start the Lesson' path={`/room/${uuid()}`} />
         </section>
     );
 };
