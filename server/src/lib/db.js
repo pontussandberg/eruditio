@@ -19,7 +19,7 @@ const createUser = user => {
 const getUser = id => {
     const client = new MongoClient(mongoUri, mongoOpts);
     return connect(client, 'users')
-        .then(col => col.findOne({ id }))
+        .then(col => col.findOne({ id }, { projection: { _id: 0 } }))
         .then(res => res || {})
         .finally(() => client.close());
 };
@@ -27,7 +27,7 @@ const getUser = id => {
 const getUserById = shortId => {
     const client = new MongoClient(mongoUri, mongoOpts);
     return connect(client, 'users')
-        .then(col => col.findOne({ shortId }))
+        .then(col => col.findOne({ shortId }, { projection: { _id: 0 } }))
         .then(res => res || {})
         .finally(() => client.close());
 };
@@ -35,7 +35,7 @@ const getUserById = shortId => {
 const getTutors = () => {
     const client = new MongoClient(mongoUri, mongoOpts);
     return connect(client, 'users')
-        .then(col => col.find({ role: 'tutor' }))
+        .then(col => col.find({ role: 'tutor' }, { projection: { _id: 0 } }))
         .then(res => res.toArray())
         .finally(() => client.close());
 };

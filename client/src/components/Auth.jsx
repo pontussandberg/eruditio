@@ -1,6 +1,6 @@
 import React from 'react';
-import GoogleOAuth from './auth-buttons/GoogleOAuth.jsx';
-import LogOut from './auth-buttons/LogOut.jsx';
+import GoogleOAuth from './buttons/GoogleOAuth.jsx';
+import LogOut from './buttons/LogOut.jsx';
 
 const Auth = ({ authenticated }) => {
     const btns = authenticated

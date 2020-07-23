@@ -10,6 +10,7 @@ const Header = ({ authenticated }) => (
         <nav className='flex items-center'>
             <Link className='mx-4' to='/'>Home</Link>
             <Link className='mx-4' to='/tutors'>Tutors</Link>
+            { authenticated && <Link className='mx-4' to='/connections'>Connections</Link> }
         </nav>
         <Auth authenticated={authenticated} />
     </header>

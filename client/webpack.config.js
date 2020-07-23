@@ -10,12 +10,17 @@ module.exports = {
         publicPath: '/',
     },
     devServer: {
+        hot: true,
         contentBase: './build',
         port: 3000,
         historyApiFallback: true,
         proxy: [{
             context: [ '/api', '/auth' ],
             target: 'http://localhost:5000',
+        }, {
+            context: [ '/socket' ],
+            target: 'http://localhost:5000',
+            pathRewrite: { '^/socket': '' },
         }],
     },
     devtool: 'eval-source-map',
@@ -42,6 +47,13 @@ module.exports = {
                 options: {
                     presets: [ 'minify', '@babel/preset-env', '@babel/preset-react' ],
                 },
+            },
+        },
+        {
+            test: /\.(?:png|jpe?g|gif|svg)$/,
+            loader: 'file-loader',
+            options: {
+                name: 'media/[name].[ext]',
             },
         },
         ],
