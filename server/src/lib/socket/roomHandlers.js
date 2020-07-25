@@ -26,9 +26,22 @@ const leaveRoom = (socket) => {
     }
 };
 
+const handleDisconnect = socket => () => {
+    leaveRoom(socket);
+};
+
+const handleJoinRoom = socket => roomId => {
+    joinRoom(roomId, socket);
+    socket.room = roomId;
+    fillRoom(roomId, socket);
+};
+
+const handleLeaveRoom = socket => () => {
+    socket.disconnect(true);
+};
+
 module.exports = {
-    fillRoom,
-    getPeer,
-    joinRoom,
-    leaveRoom,
+    handleDisconnect,
+    handleJoinRoom,
+    handleLeaveRoom,
 };
