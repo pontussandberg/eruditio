@@ -114,7 +114,7 @@ const VideoChat = ({ id, onRemoveVideo, onFull }) => {
             .then(stream => {
                 userVideo.current.srcObject = stream;
                 userStream.current = stream;
-                socketRef.current = io.connect('http://localhost:5000');
+                socketRef.current = io.connect('/socket');
 
                 socketRef.current.emit('join room', id);
 

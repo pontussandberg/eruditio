@@ -5,7 +5,7 @@ const socket = require('./src/lib/socket');
 
 const server = http.createServer(app);
 
-const io = socketIO(server);
+const io = socketIO(server).of('socket');
 
 io.on('connection', socket(io));
 // const rooms = {};

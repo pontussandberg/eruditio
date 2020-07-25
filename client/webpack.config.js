@@ -11,16 +11,14 @@ module.exports = {
     },
     devServer: {
         hot: true,
+        compress: true,
         contentBase: './build',
         port: 3000,
         historyApiFallback: true,
         proxy: [{
-            context: [ '/api', '/auth' ],
+            context: [ '/api', '/auth', '/socket' ],
             target: 'http://localhost:5000',
-        }, {
-            context: [ '/socket' ],
-            target: 'http://localhost:5000',
-            pathRewrite: { '^/socket': '' },
+            ws: true,
         }],
     },
     devtool: 'eval-source-map',
