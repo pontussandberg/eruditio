@@ -110,7 +110,7 @@ const VideoChat = ({ id, onRemoveVideo }) => {
     };
 
     useEffect(() => {
-        navigator.mediaDevices.getUserMedia({ audio: true, video: true })
+        navigator.mediaDevices.getUserMedia({ audio: false, video: true })
             .then(stream => {
                 userVideo.current.srcObject = stream;
                 userStream.current = stream;
@@ -121,14 +121,19 @@ const VideoChat = ({ id, onRemoveVideo }) => {
                 socketRef.current.on('room full', userID => {
                     callUser(userID);
                     otherUser.current = userID;
+                    console.log('Room is full');
                 });
                 socketRef.current.on('user joined', userID => {
                     otherUser.current = userID;
+                    console.log(`${userID} joined`);
                 });
                 socketRef.current.on('offer', handleRecieveCall);
                 socketRef.current.on('answer', handleAnswer);
                 socketRef.current.on('ice-candidate', handleNewICECandidateMsg);
-                socketRef.current.on('user left', () => otherVideo.current.srcObject = null);
+                socketRef.current.on('user left', () => {
+                    otherVideo.current.srcObject = null;
+                    console.log('user left');
+                });
             });
         return handleHangup;
     }, []);
