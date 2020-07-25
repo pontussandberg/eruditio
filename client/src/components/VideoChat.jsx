@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import io from 'socket.io-client';
 import hangUp from '../media/end-call.svg';
 
-const VideoChat = ({ id, onRemoveVideo }) => {
+const VideoChat = ({ id, onRemoveVideo, onFull }) => {
     const userVideo = useRef();
     const otherVideo = useRef();
     const peerRef = useRef();
@@ -118,7 +118,7 @@ const VideoChat = ({ id, onRemoveVideo }) => {
 
                 socketRef.current.emit('join room', id);
 
-                socketRef.current.on('room full', userId => {
+                socketRef.current.on('start call', userId => {
                     callUser(userId);
                     otherUser.current = userId;
                 });
@@ -131,6 +131,7 @@ const VideoChat = ({ id, onRemoveVideo }) => {
                 socketRef.current.on('user left', () => {
                     otherVideo.current.srcObject = null;
                 });
+                socketRef.current.on('full room', onFull);
             });
         return handleHangup;
     }, []);
