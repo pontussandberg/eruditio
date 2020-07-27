@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import io from 'socket.io-client';
 import hangUp from '../media/end-call.svg';
 
-const VideoChat = ({ id, onRemoveVideo }) => {
+const VideoChat = ({ id, onRemoveVideo, onFull }) => {
     const userVideo = useRef();
     const otherVideo = useRef();
     const peerRef = useRef();
@@ -10,14 +10,14 @@ const VideoChat = ({ id, onRemoveVideo }) => {
     const otherUser = useRef();
     const userStream = useRef();
 
-    const callUser = userID => {
-        peerRef.current = createPeer(userID);
+    const callUser = userId => {
+        peerRef.current = createPeer(userId);
         userStream.current
             .getTracks()
             .forEach(track => peerRef.current.addTrack(track, userStream.current));
     };
 
-    const createPeer = userID => {
+    const createPeer = userId => {
         const peer = new RTCPeerConnection({
             iceServers: [{
                 urls: 'stun:stun.stunprotocol.org',
@@ -30,18 +30,18 @@ const VideoChat = ({ id, onRemoveVideo }) => {
 
         peer.onicecandidate = handleICECandidateEvent;
         peer.ontrack = handleTrackEvent;
-        peer.onnegotiationneeded = () => handleNegotiationNeededEvent(userID);
+        peer.onnegotiationneeded = () => handleNegotiationNeededEvent(userId);
 
         return peer;
     };
 
-    const handleNegotiationNeededEvent = (userID) => {
+    const handleNegotiationNeededEvent = userId => {
         peerRef.current
             .createOffer()
             .then(offer => peerRef.current.setLocalDescription(offer))
             .then(() => {
                 const payload = {
-                    target: userID,
+                    target: userId,
                     caller: socketRef.current.id,
                     sdp: peerRef.current.localDescription,
                 };
@@ -79,11 +79,11 @@ const VideoChat = ({ id, onRemoveVideo }) => {
             .catch(console.error);
     };
 
-    const handleICECandidateEvent = e => {
-        if (e.candidate) {
+    const handleICECandidateEvent = event => {
+        if (event.candidate) {
             const payload = {
                 target: otherUser.current,
-                candidate: e.candidate,
+                candidate: event.candidate,
             };
             socketRef.current.emit('ice-candidate', payload);
         }
@@ -114,21 +114,24 @@ const VideoChat = ({ id, onRemoveVideo }) => {
             .then(stream => {
                 userVideo.current.srcObject = stream;
                 userStream.current = stream;
-                socketRef.current = io.connect('http://localhost:5000');
+                socketRef.current = io.connect('/socket');
 
                 socketRef.current.emit('join room', id);
 
-                socketRef.current.on('room full', userID => {
-                    callUser(userID);
-                    otherUser.current = userID;
+                socketRef.current.on('start call', userId => {
+                    callUser(userId);
+                    otherUser.current = userId;
                 });
-                socketRef.current.on('user joined', userID => {
-                    otherUser.current = userID;
+                socketRef.current.on('user joined', userId => {
+                    otherUser.current = userId;
                 });
                 socketRef.current.on('offer', handleRecieveCall);
                 socketRef.current.on('answer', handleAnswer);
                 socketRef.current.on('ice-candidate', handleNewICECandidateMsg);
-                socketRef.current.on('user left', () => otherVideo.current.srcObject = null);
+                socketRef.current.on('user left', () => {
+                    otherVideo.current.srcObject = null;
+                });
+                socketRef.current.on('full room', onFull);
             });
         return handleHangup;
     }, []);
