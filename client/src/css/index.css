@@ -45,3 +45,7 @@ button:focus {
 
     background-image: url('../media/down-arrow.svg')
 }
+
+.danger {
+    background-color: #d9534f !important;
+}
