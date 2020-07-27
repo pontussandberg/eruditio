@@ -2,9 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+button:focus {
+    outline: none;
+}
+
 .view-button {
-    min-width: 102px;
-    max-width: 102px;
+    min-width: 106px;
+    max-width: 106px;
     min-height: 40px;
     max-height: 40px;
 }

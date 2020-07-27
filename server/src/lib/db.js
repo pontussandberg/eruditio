@@ -9,6 +9,28 @@ const mongoOpts = {
 const connect = (client, collection) => client.connect()
     .then(client => client.db('eruditio').collection(collection));
 
+const addRequest = ({ student, tutor }) => {
+    const client = new MongoClient(mongoUri, mongoOpts);
+    return connect(client, 'users')
+        .then(col => col.updateMany(
+            { shortId: { $in: [ student, tutor ] } },
+            { $push: { requests: { student, tutor } } }
+        ))
+        .finally(() => client.close());
+};
+
+const getPending = id => {
+    const query = {
+        requests: { $elemMatch: { tutor: id } },
+        shortId: { $ne: id },
+    };
+
+    const client = new MongoClient(mongoUri, mongoOpts);
+    return connect(client, 'users')
+        .then(col => col.find(query).toArray())
+        .finally(() => client.close());
+};
+
 const createUser = user => {
     const client = new MongoClient(mongoUri, mongoOpts);
     return connect(client, 'users')
@@ -45,4 +67,6 @@ module.exports = {
     getUser,
     getUserById,
     getTutors,
+    addRequest,
+    getPending,
 };

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
 import Classroom from './components/Classroom.jsx';
 import Connections from './components/Connections.jsx';
 import Header from './components/Header.jsx';
@@ -13,6 +13,8 @@ const App = () => {
     const [ hasProfile, setHasProfile ] = useState(false);
     const [ profileData, setProfileData ] = useState({});
 
+    let { pathname } = useLocation();
+
     const setProfileInfo = data => {
         setHasProfile(data.hasProfile);
         setAuthenticated(true);
@@ -22,6 +24,7 @@ const App = () => {
     const handleCreateProfile = () => setHasProfile(true);
 
     useEffect(() => {
+        console.log(pathname);
         fetch('/api/users/me')
             .then(res => res.json())
             .then(data => data
@@ -29,32 +32,36 @@ const App = () => {
                 : setAuthenticated(false)
             )
             .catch(console.error);
-    }, []);
+    }, [ pathname ]);
 
     const home = authenticated && !hasProfile
         ? <Redirect to='/create-profile' />
         : <Home />;
 
     return (
-        <BrowserRouter>
-            <div className='container mx-auto px-2'>
-                <Header authenticated={authenticated} user={profileData} />
-                <Switch>
-                    <Route path='/tutors' component={TutorList} />
-                    <Route path='/users/:id' component={UserPage} />
-                    <Route exact path='/'>
-                        {home}
-                    </Route>
-                    <Route path='/create-profile'>
-                        <UserForm onSubmit={handleCreateProfile} hasProfile={hasProfile} />
-                    </Route>
-                    <Route path='/connections'>
-                        <Connections authenticated={authenticated} profile={profileData}/>
-                    </Route>
-                    <Route path='/room/:id' component={Classroom} />
-                </Switch>
-            </div>
-        </BrowserRouter>
+        <div className='container mx-auto px-2'>
+            <Header
+                authenticated={authenticated}
+                user={profileData}
+                hasProfile={hasProfile}
+            />
+            <Switch>
+                <Route path='/tutors'>
+                    <TutorList shortId={profileData.shortId} />
+                </Route>
+                <Route path='/users/:id' component={UserPage} />
+                <Route exact path='/'>
+                    {home}
+                </Route>
+                <Route path='/create-profile'>
+                    <UserForm onSubmit={handleCreateProfile} hasProfile={hasProfile} />
+                </Route>
+                <Route path='/connections'>
+                    <Connections authenticated={authenticated} profile={profileData}/>
+                </Route>
+                <Route path='/room/:id' component={Classroom} />
+            </Switch>
+        </div>
     );
 };
 

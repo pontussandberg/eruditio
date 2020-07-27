@@ -1,13 +1,24 @@
 const shortid = require('shortid');
 const db = require('../../lib/db');
 
+const handlePostRequest = (req, res) => {
+    db.addRequest(req.body)
+        .then(() => res.end());
+};
+
 const handlePostUser = (req, res) => {
     db.createUser({
         ...req.body,
         id: req.user.id,
         shortId: shortid.generate(),
+        requests: [],
+        connections: [],
     }).then(() => res.end());
 };
+
+const handleGetPending = (req, res) =>
+    db.getPending(req.user.shortId)
+        .then(x => res.json(x));
 
 const handleGetMe =  (req, res) => {
     const response = req.user === undefined
@@ -23,6 +34,8 @@ const handleGetMe =  (req, res) => {
             shortId: req.user.shortId,
             hasProfile: req.user.hasProfile,
             about: req.user.about,
+            requests: req.user.requests,
+            connections: req.user.connections,
         };
     res.json(response);
 };
@@ -38,8 +51,10 @@ const handleGetUser = (req, res) => {
 };
 
 module.exports = {
+    handlePostRequest,
     handlePostUser,
     handleGetMe,
     handleGetTutors,
     handleGetUser,
+    handleGetPending,
 };

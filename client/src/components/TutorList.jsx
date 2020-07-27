@@ -1,24 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import ProfileSection from './ProfileSection.jsx';
-import ButtonLink from './buttons/ButtonLink.jsx';
+import ScnBtnLink from './buttons/ScnBtnLink.jsx';
+import Button from './buttons/Button.jsx';
 
-const createList = tutors => (
-    <section className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'>
-        {tutors.map(mapTutor)}
+const createList = (tutors, shortId) => (
+    <section className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-8'>
+        {tutors.map(mapTutor(shortId))}
     </section>
 );
-const mapTutor = x => (
-    <div className='shadow p-6 rounded' key={x.shortId} >
-        <div className='flex justify-between'>
+
+
+const addRequest = (body) => {
+    fetch('/api/users/request', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Credentials': true,
+        },
+        body: JSON.stringify(body),
+    });
+};
+
+const mapTutor = shortId => x => (
+    <div className='shadow p-6 rounded flex justify-between' key={x.shortId} >
+        <div className='flex flex-col'>
             <h2 className='text-2xl font-semibold'>{x.name} {x['last-name']}</h2>
-            <ButtonLink path={`/users/${x.shortId}`} classes='ml-2 view-button' text='View profile' />
+            <ProfileSection title='Subjects' content={x.subjects} />
+            <ProfileSection title='Languages' content={x.languages} />
         </div>
-        <ProfileSection title='Subjects' content={x.subjects} />
-        <ProfileSection title='Languages' content={x.languages} />
+        <div className='flex flex-col'>
+            {x.shortId !== shortId
+            && !x.requests.includes(shortId)
+            && !x.connections.includes(shortId)
+            && <Button onClick={() => addRequest({ tutor: x.shortId, student: shortId })} classes='view-button mb-4' text='Connect' />}
+            <ScnBtnLink path={`/users/${x.shortId}`} classes='view-button' text='View profile' />
+        </div>
     </div>
 );
 
-const TutorList = () => {
+const TutorList = ({ shortId }) => {
     const [ list, setList ] = useState([]);
     useEffect(() => {
         fetch('/api/users/tutors')
@@ -29,7 +50,7 @@ const TutorList = () => {
 
 
     return (
-        list.length === 0 ? <p> is loading...</p> : createList(list)
+        list.length === 0 ? <p> is loading...</p> : createList(list, shortId)
     );
 };
 
