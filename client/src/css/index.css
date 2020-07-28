@@ -2,9 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+button:focus {
+    outline: none;
+}
+
 .view-button {
-    min-width: 102px;
-    max-width: 102px;
+    min-width: 107px;
+    max-width: 107px;
     min-height: 40px;
     max-height: 40px;
 }
@@ -40,4 +44,8 @@
     background-size: 20px;
 
     background-image: url('../media/down-arrow.svg')
+}
+
+.danger {
+    background-color: #d9534f !important;
 }
