@@ -122,6 +122,27 @@ const declineRequest = (tutor, student) => {
         .finally(() => client.close());
 };
 
+const createRoom = room => {
+    const client = new MongoClient(mongoUri, mongoOpts);
+    return connect(client, 'rooms')
+        .then(col => col.insertOne(room))
+        .finally(() => client.close());
+};
+
+const deleteRoom = id => {
+    const client = new MongoClient(mongoUri, mongoOpts);
+    return connect(client, 'rooms')
+        .then(col => col.deleteOne({ id }))
+        .finally(() => client.close());
+};
+
+const findRoom = id => {
+    const client = new MongoClient(mongoUri, mongoOpts);
+    return connect(client, 'rooms')
+        .then(col => col.findOne({ id }))
+        .finally(() => client.close());
+};
+
 module.exports = {
     addRequest,
     createUser,
@@ -132,4 +153,7 @@ module.exports = {
     getPending,
     acceptRequest,
     declineRequest,
+    createRoom,
+    deleteRoom,
+    findRoom,
 };
