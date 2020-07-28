@@ -49,3 +49,7 @@ button:focus {
 .danger {
     background-color: #d9534f !important;
 }
+
+.green {
+    background-color: #5bb85c !important;
+}

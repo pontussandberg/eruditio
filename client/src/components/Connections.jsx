@@ -2,23 +2,36 @@ import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 // import { v4 as uuid } from 'uuid';
 import Button from './buttons/Button.jsx';
-import ButtonLink from './buttons/ButtonLink.jsx';
+// import ButtonLink from './buttons/ButtonLink.jsx';
 import ConItem from './conItem.jsx';
 import ConnectionsNavLink from './buttons/ConnectionsNavLink.jsx';
 import ScnBtnLink from './buttons/ScnBtnLink.jsx';
-import { cancelRequest, acceptRequest, declineRequest } from '../lib/fetchers.js';
+import {
+    cancelRequest,
+    acceptRequest,
+    declineRequest,
+    createRoom
+} from '../lib/fetchers.js';
 
 
 const contentActions = {
-    connections: ({ connections }) => connections.map(con => (
+    connections: ({ connections }, _, leave) => connections.map(con => (
         <ConItem key={con.shortId} con={con}>
-            <ButtonLink text='View Profile' path={`/users/${con.shortId}`} />
-            <div></div>
+            <Button
+                text='Call'
+                onClick={() => createRoom({ student: con.shortId }).then(leave)}
+                classes='green px-6'
+            />
+            <ScnBtnLink text='View Profile' path={`/users/${con.shortId}`} />
         </ConItem>
     )),
     outgoing: ({ outgoing }, refresh) => outgoing.map(con => (
         <ConItem key={con.shortId} con={con}>
-            <Button onClick={() => cancelRequest(con.shortId).then(refresh)} text='Cancel' classes='danger' />
+            <Button
+                onClick={() => cancelRequest(con.shortId).then(refresh)}
+                text='Cancel'
+                classes='danger'
+            />
             <ScnBtnLink text='View Profile' path={`/users/${con.shortId}`} />
         </ConItem>
     )),
@@ -45,6 +58,9 @@ const Connections = ({ authenticated, profile }) => {
 
     const [ page, setPage ] = useState('connections');
     const [ data, setData ] = useState(null);
+    const [ room, setRoom ] = useState(null);
+
+    const goToRoom = id => setRoom(id);
 
     const getBtnClasses = btnName => {
         return btnName === page ? 'bg-white text-black' : 'text-white';
@@ -54,7 +70,7 @@ const Connections = ({ authenticated, profile }) => {
         const action = contentActions[page] || contentActions.default;
         return (
             <div>
-                {action(data, getCons)}
+                {action(data, getCons, goToRoom)}
             </div>
         );
     };
@@ -70,8 +86,9 @@ const Connections = ({ authenticated, profile }) => {
         getCons();
     }, []);
 
-
+    if (room) return <Redirect to={`/room/${room}`} />;
     if (data === null) return null;
+
     return (
         <section className='border-2 border-blue-600 lg:mx-32 md:mx-20'>
             <nav className='bg-blue-600 flex justify-between'>
@@ -82,9 +99,9 @@ const Connections = ({ authenticated, profile }) => {
                 && <ConnectionsNavLink onClick={() => setPage('incoming')} text={'Incoming'} classes={getBtnClasses('incoming')} />}
             </nav>
 
+
             {createContent()}
         </section>
     );
 };
-
 export default Connections;

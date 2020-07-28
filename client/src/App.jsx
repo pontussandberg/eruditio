@@ -24,7 +24,6 @@ const App = () => {
     const handleCreateProfile = () => setHasProfile(true);
 
     useEffect(() => {
-        console.log(pathname);
         fetch('/api/users/me')
             .then(res => res.json())
             .then(data => data
