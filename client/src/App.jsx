@@ -7,6 +7,7 @@ import Home from './components/Home.jsx';
 import UserForm from './components/UserForm.jsx';
 import UserPage from './components/UserPage.jsx';
 import TutorList from './components/TutorList.jsx';
+import MobileMenu from './components/MobileMenu.jsx';
 
 const App = () => {
     const [ authenticated, setAuthenticated ] = useState(false);
@@ -38,10 +39,11 @@ const App = () => {
         : <Home />;
 
     return (
-        <div className='container mx-auto px-2'>
+        <>
+        <div className='container mx-auto px-2 pb-24 md:pb-2'>
             <Header
                 authenticated={authenticated}
-                user={profileData}
+                user={profileData.shortId}
                 hasProfile={hasProfile}
             />
             <Switch>
@@ -61,6 +63,8 @@ const App = () => {
                 <Route path='/room/:id' component={Classroom} />
             </Switch>
         </div>
+        <MobileMenu authenticated={authenticated} hasProfile={hasProfile} user={profileData.shortId}/>
+        </>
     );
 };
 

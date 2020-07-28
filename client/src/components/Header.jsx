@@ -7,7 +7,7 @@ const Header = ({ authenticated, user, hasProfile }) => (
         <Link to='/'>
             <h1 className='text-blue-600 font-bold text-2xl'>Eruditio</h1>
         </Link>
-        <nav className='flex items-center'>
+        <nav className='hidden md:flex items-center'>
             <Link className='mx-4' to='/'>Home</Link>
             <Link className='mx-4' to='/tutors'>Tutors</Link>
             { authenticated && <Link className='mx-4' to='/connections'>Connections</Link> }
@@ -15,7 +15,12 @@ const Header = ({ authenticated, user, hasProfile }) => (
         <div className='flex'>
             {authenticated
                 && hasProfile
-                && <Link to={`/users/${user.shortId}`} className='mr-8'>My Profile</Link>}
+                && <Link 
+                    to={`/users/${user}`} 
+                    className='mr-8 hidden md:block'
+                >
+                    My Profile
+                </Link>}
             <Auth authenticated={authenticated}/>
         </div>
     </header>
