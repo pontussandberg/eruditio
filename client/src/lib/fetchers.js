@@ -30,10 +30,23 @@ const cancelRequest = id => fetch('/api/users/me/pending/cancel', {
     body: JSON.stringify({ id }),
 });
 
+const createRoom = body => fetch('/api/rooms', {
+    ...options,
+    method: 'POST',
+    body: JSON.stringify(body),
+}).then(res => res.json());
+
+const getRooms = () => fetch('/api/rooms', {
+    ...options,
+    method: 'GET',
+}).then(res => res.json());
+
 
 module.exports = {
     addRequest,
     acceptRequest,
     declineRequest,
     cancelRequest,
+    createRoom,
+    getRooms,
 };

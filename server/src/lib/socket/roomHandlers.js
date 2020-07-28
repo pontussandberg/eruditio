@@ -1,3 +1,5 @@
+const db = require('../db');
+
 const rooms = {};
 
 const diffThan = target => x => x !== target;
@@ -41,6 +43,9 @@ const handleJoinRoom = socket => id => {
 
 const handleLeaveRoom = socket => () => {
     socket.disconnect(true);
+    if (rooms[socket.room].length === 0) {
+        db.deleteRoom(socket.room);
+    }
 };
 
 module.exports = {

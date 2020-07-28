@@ -1,7 +1,16 @@
 const shortid = require('shortid');
 const db = require('../../lib/db');
 
-// const findBy = (value, prop) => x => x.request.find(y => y[prop] === value);
+
+const filterConnections = user => obj => ({
+    ...obj,
+    relation: Object
+        .entries(obj.connections.find(x => x.student === user || x.tutor === user))
+        .find(x => x[1] !== user)[0],
+    connections: undefined,
+});
+
+const parseConnections = user => arr => arr.map(filterConnections(user));
 
 const parsePending = user => arr => ({
     incoming: arr.filter(x => x.requests.some(y => y.tutor === user)),
@@ -25,6 +34,7 @@ const handlePostUser = (req, res) => {
 
 const handleGetConnections = (req, res) => {
     db.getConnections(req.user.shortId)
+        .then(parseConnections(req.user.shortId))
         .then(data => res.json(data));
 };
 
@@ -77,6 +87,8 @@ const handleCancel = (req, res) => {
     db.declineRequest(req.body.id, req.user.shortId)
         .then(() => res.end());
 };
+
+
 module.exports = {
     handlePostRequest,
     handlePostUser,
