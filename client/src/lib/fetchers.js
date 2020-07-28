@@ -36,6 +36,11 @@ const createRoom = body => fetch('/api/rooms', {
     body: JSON.stringify(body),
 }).then(res => res.json());
 
+const getRooms = () => fetch('/api/rooms', {
+    ...options,
+    method: 'GET',
+}).then(res => res.json());
+
 
 module.exports = {
     addRequest,
@@ -43,4 +48,5 @@ module.exports = {
     declineRequest,
     cancelRequest,
     createRoom,
+    getRooms,
 };

@@ -143,6 +143,13 @@ const findRoom = id => {
         .finally(() => client.close());
 };
 
+const findRoomsByUser = student => {
+    const client = new MongoClient(mongoUri, mongoOpts);
+    return connect(client, 'rooms')
+        .then(col => col.find({ student }).toArray())
+        .finally(() => client.close());
+};
+
 module.exports = {
     addRequest,
     createUser,
@@ -156,4 +163,5 @@ module.exports = {
     createRoom,
     deleteRoom,
     findRoom,
+    findRoomsByUser,
 };

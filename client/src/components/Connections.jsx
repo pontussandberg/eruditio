@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-// import { v4 as uuid } from 'uuid';
 import Button from './buttons/Button.jsx';
-// import ButtonLink from './buttons/ButtonLink.jsx';
 import ConItem from './conItem.jsx';
 import ConnectionsNavLink from './buttons/ConnectionsNavLink.jsx';
 import ScnBtnLink from './buttons/ScnBtnLink.jsx';
@@ -10,21 +8,36 @@ import {
     cancelRequest,
     acceptRequest,
     declineRequest,
-    createRoom
+    createRoom,
+    getRooms
 } from '../lib/fetchers.js';
 
+const getRoom = (tutorId, rooms) => rooms.find(x => x.tutor === tutorId)
 
 const contentActions = {
-    connections: ({ connections }, _, leave) => connections.map(con => (
-        <ConItem key={con.shortId} con={con}>
-            <Button
+    connections: ({ connections, rooms }, _, leave) => connections.map(con => {
+        const room = getRoom(con.shortId, rooms);
+        const button = con.relation === 'student' 
+            ? <Button
                 text='Call'
                 onClick={() => createRoom({ student: con.shortId }).then(leave)}
                 classes='green px-6'
             />
-            <ScnBtnLink text='View Profile' path={`/users/${con.shortId}`} />
-        </ConItem>
-    )),
+            : room
+            ? <Button
+                text='Join Call'
+                onClick={() => leave(room.id)}
+                classes='green px-6'
+            />
+            : <div></div>
+
+        return (
+            <ConItem key={con.shortId} con={con}>
+                {button}
+                <ScnBtnLink text='View Profile' path={`/users/${con.shortId}`} />
+            </ConItem>
+        )
+    }),
     outgoing: ({ outgoing }, refresh) => outgoing.map(con => (
         <ConItem key={con.shortId} con={con}>
             <Button
@@ -78,8 +91,13 @@ const Connections = ({ authenticated, profile }) => {
     const getCons = () => Promise.all([
         fetch('/api/users/me/pending').then(x => x.json()),
         fetch('/api/users/me/connections').then(x => x.json()),
+        getRooms()
     ])
-        .then(([ pending, connections ]) => ({ ...pending, connections }))
+        .then(([ pending, connections, rooms ]) => ({
+            ...pending, 
+            connections,
+            rooms,
+        }))
         .then(x => setData(x));
 
     useEffect(() => {

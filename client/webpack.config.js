@@ -48,7 +48,7 @@ module.exports = {
             },
         },
         {
-            test: /\.(?:png|jpe?g|gif|svg)$/,
+            test: /\.(?:png|jpe?g|gif|svg|ico)$/,
             loader: 'file-loader',
             options: {
                 name: 'media/[name].[ext]',
@@ -60,6 +60,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             scriptLoading: 'defer',
             template: './public/index.html',
+            favicon: './src/media/favicon.ico',
         }),
         new MiniCssExtractPlugin({
             filename: 'style.css',
