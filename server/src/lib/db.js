@@ -94,6 +94,34 @@ const getTutors = () => {
         .finally(() => client.close());
 };
 
+const acceptRequest = (tutor, student) => {
+    const query = {
+        requests: { $elemMatch: { tutor, student } },
+    };
+    const update = {
+        $pull: { requests: { tutor, student } },
+        $push: { connections: { tutor, student } },
+    };
+
+    const client = new MongoClient(mongoUri, mongoOpts);
+    return connect(client, 'users')
+        .then(col => col.updateMany(query, update))
+        .finally(() => client.close());
+};
+
+const declineRequest = (tutor, student) => {
+    const query = {
+        requests: { $elemMatch: { tutor, student } },
+    };
+    const update = {
+        $pull: { requests: { tutor, student } },
+    };
+    const client = new MongoClient(mongoUri, mongoOpts);
+    return connect(client, 'users')
+        .then(col => col.updateMany(query, update))
+        .finally(() => client.close());
+};
+
 module.exports = {
     addRequest,
     createUser,
@@ -102,4 +130,6 @@ module.exports = {
     getTutors,
     getConnections,
     getPending,
+    acceptRequest,
+    declineRequest,
 };

@@ -4,8 +4,8 @@ const db = require('../../lib/db');
 // const findBy = (value, prop) => x => x.request.find(y => y[prop] === value);
 
 const parsePending = user => arr => ({
-    incoming: arr.filter(x => x.requests.find(y => y.tutor === user)),
-    outgoing: arr.filter(x => x.requests.find(y => y.student === user)),
+    incoming: arr.filter(x => x.requests.some(y => y.tutor === user)),
+    outgoing: arr.filter(x => x.requests.some(y => y.student === user)),
 });
 
 const handlePostRequest = (req, res) => {
@@ -63,6 +63,20 @@ const handleGetUser = (req, res) => {
         .then(data => res.json(data));
 };
 
+const handleAccept = (req, res) => {
+    db.acceptRequest(req.user.shortId, req.body.id)
+        .then(() => res.end());
+};
+
+const handleDecline = (req, res) => {
+    db.declineRequest(req.user.shortId, req.body.id)
+        .then(() => res.end());
+};
+
+const handleCancel = (req, res) => {
+    db.declineRequest(req.body.id, req.user.shortId)
+        .then(() => res.end());
+};
 module.exports = {
     handlePostRequest,
     handlePostUser,
@@ -71,4 +85,7 @@ module.exports = {
     handleGetUser,
     handleGetConnections,
     handleGetPending,
+    handleAccept,
+    handleDecline,
+    handleCancel,
 };

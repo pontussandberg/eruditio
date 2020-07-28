@@ -1,28 +1,38 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import { v4 as uuid } from 'uuid';
+// import { v4 as uuid } from 'uuid';
 import Button from './buttons/Button.jsx';
 import ButtonLink from './buttons/ButtonLink.jsx';
 import ConItem from './conItem.jsx';
 import ConnectionsNavLink from './buttons/ConnectionsNavLink.jsx';
 import ScnBtnLink from './buttons/ScnBtnLink.jsx';
+import { cancelRequest, acceptRequest, declineRequest } from '../lib/fetchers.js';
+
 
 const contentActions = {
     connections: ({ connections }) => connections.map(con => (
         <ConItem key={con.shortId} con={con}>
             <ButtonLink text='View Profile' path={`/users/${con.shortId}`} />
+            <div></div>
         </ConItem>
     )),
-    outgoing: ({ outgoing }) => outgoing.map(con => (
+    outgoing: ({ outgoing }, refresh) => outgoing.map(con => (
         <ConItem key={con.shortId} con={con}>
-            <Button onClick={() => console.log('Cancelled')} text='Cancel' classes='danger' />
+            <Button onClick={() => cancelRequest(con.shortId).then(refresh)} text='Cancel' classes='danger' />
             <ScnBtnLink text='View Profile' path={`/users/${con.shortId}`} />
         </ConItem>
     )),
-    incoming: ({ incoming }) => incoming.map(con => (
+    incoming: ({ incoming }, refresh) => incoming.map(con => (
         <ConItem key={con.shortId} con={con}>
-            <Button onClick={() => console.log('Declined')} text='Decline' classes='danger' />
-            <Button onClick={() => console.log('Accepted')} text='Accept' />
+            <Button
+                onClick={() => declineRequest(con.shortId).then(refresh)}
+                text='Decline'
+                classes='danger'
+            />
+            <Button
+                onClick={() => acceptRequest(con.shortId).then(refresh)}
+                text='Accept'
+            />
             <ScnBtnLink text='View Profile' path={`/users/${con.shortId}`} />
         </ConItem>
     )),
@@ -44,19 +54,23 @@ const Connections = ({ authenticated, profile }) => {
         const action = contentActions[page] || contentActions.default;
         return (
             <div>
-                {action(data)}
+                {action(data, getCons)}
             </div>
         );
     };
 
+    const getCons = () => Promise.all([
+        fetch('/api/users/me/pending').then(x => x.json()),
+        fetch('/api/users/me/connections').then(x => x.json()),
+    ])
+        .then(([ pending, connections ]) => ({ ...pending, connections }))
+        .then(x => setData(x));
+
     useEffect(() => {
-        Promise.all([
-            fetch('/api/users/me/pending').then(x => x.json()),
-            fetch('/api/users/me/connections').then(x => x.json()),
-        ])
-            .then(([ pending, connections ]) => ({ ...pending, connections }))
-            .then(x => setData(x));
+        getCons();
     }, []);
+
+
     if (data === null) return null;
     return (
         <section className='border-2 border-blue-600 lg:mx-32 md:mx-20'>
