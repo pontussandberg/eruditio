@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ProfileSection from './ProfileSection.jsx';
 import ScnBtnLink from './buttons/ScnBtnLink.jsx';
 import Button from './buttons/Button.jsx';
+import Spinner from './Spinner.jsx'
 import { addRequest, acceptRequest, cancelRequest } from '../lib/fetchers.js';
 
 const createList = (tutors, shortId, refresh) => (
@@ -50,7 +51,7 @@ const TutorList = ({ shortId }) => {
     }, []);
 
     return list.length === 0
-        ? <p> is loading...</p>
+        ? <Spinner />
         : createList(list, shortId, getList);
 };
 
