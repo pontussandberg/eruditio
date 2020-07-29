@@ -27,8 +27,8 @@ const cancelRequest = id => fetch('/api/users/me/pending/cancel', {
 const createProfile = body => fetch('/api/users', {
     ...options,
     method: 'POST',
-    body: JSON.stringify(body)
-})
+    body: JSON.stringify(body),
+});
 
 const createRoom = body => fetch('/api/rooms', {
     ...options,
