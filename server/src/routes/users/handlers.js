@@ -1,6 +1,7 @@
 const shortid = require('shortid');
 const db = require('../../lib/db');
 
+const filterByUser = user => doc => doc.requests.some(x => x.tutor === user);
 
 const filterConnections = user => obj => ({
     ...obj,
@@ -13,8 +14,8 @@ const filterConnections = user => obj => ({
 const parseConnections = user => arr => arr.map(filterConnections(user));
 
 const parsePending = user => arr => ({
-    incoming: arr.filter(x => x.requests.some(y => y.tutor === user)),
-    outgoing: arr.filter(x => x.requests.some(y => y.student === user)),
+    incoming: arr.filter(filterByUser(user)),
+    outgoing: arr.filter(filterByUser(user)),
 });
 
 const handlePostRequest = (req, res) => {

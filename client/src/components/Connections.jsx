@@ -76,9 +76,9 @@ const Connections = ({ authenticated, profile }) => {
 
     const goToRoom = id => setRoom(id);
 
-    const getBtnClasses = btnName => {
-        return btnName === page ? 'bg-white text-black' : 'text-white';
-    };
+    const getBtnClasses = btnName => btnName === page
+        ? 'bg-white text-black'
+        : 'text-white';
 
     const createContent = () => {
         const action = contentActions[page] || contentActions.default;
@@ -116,13 +116,23 @@ const Connections = ({ authenticated, profile }) => {
     return (
         <section className='border-2 border-blue-600 lg:mx-32 md:mx-20'>
             <nav className='bg-blue-600 flex justify-between'>
-                <ConnectionsNavLink onClick={() => setPage('connections')} text={'Connections'} classes={getBtnClasses('connections')} />
-                <ConnectionsNavLink onClick={() => setPage('outgoing')} text={'Outgoing'} classes={getBtnClasses('outgoing')} />
+                <ConnectionsNavLink
+                    onClick={() => setPage('connections')}
+                    text={'Connections'}
+                    classes={getBtnClasses('connections')} />
+                <ConnectionsNavLink
+                    onClick={() => setPage('outgoing')}
+                    text={'Outgoing'}
+                    classes={getBtnClasses('outgoing')}
+                />
 
                 {profile.role === 'tutor'
-                && <ConnectionsNavLink onClick={() => setPage('incoming')} text={'Incoming'} classes={getBtnClasses('incoming')} />}
+                && <ConnectionsNavLink
+                    onClick={() => setPage('incoming')}
+                    text={'Incoming'}
+                    classes={getBtnClasses('incoming')}
+                />}
             </nav>
-
 
             {createContent()}
         </section>

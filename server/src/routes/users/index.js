@@ -18,6 +18,7 @@ router.post('/request', handlePostRequest);
 router.get('/me', handleGetMe);
 router.get('/tutors', handleGetTutors);
 router.get('/:id', handleGetUser);
+
 router.get('/me/connections', handleGetConnections);
 router.get('/me/pending', handleGetPending);
 

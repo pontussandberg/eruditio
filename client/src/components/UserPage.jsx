@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import Spinner from './Spinner.jsx';
 
 const UserPage = ({ match: { params: { id } } }) => {
     const [ user, setUser ] = useState(null);
+
     useEffect(() => {
         fetch(`/api/users/${id}`)
             .then(res => res.json())
@@ -9,9 +11,7 @@ const UserPage = ({ match: { params: { id } } }) => {
             .catch(console.error);
     }, []);
 
-    if(!user){
-        return <div>LOADING...</div>;
-    }
+    if (!user) return <Spinner />;
 
     const {
         'last-name': lastname,
