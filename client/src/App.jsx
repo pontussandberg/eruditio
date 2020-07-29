@@ -40,30 +40,30 @@ const App = () => {
 
     return (
         <>
-        <div className='container mx-auto px-2 pb-24 md:pb-2'>
-            <Header
-                authenticated={authenticated}
-                user={profileData.shortId}
-                hasProfile={hasProfile}
-            />
-            <Switch>
-                <Route path='/tutors'>
-                    <TutorList shortId={profileData.shortId} />
-                </Route>
-                <Route path='/users/:id' component={UserPage} />
-                <Route exact path='/'>
-                    {home}
-                </Route>
-                <Route path='/create-profile'>
-                    <UserForm onSubmit={handleCreateProfile} hasProfile={hasProfile} />
-                </Route>
-                <Route path='/connections'>
-                    <Connections authenticated={authenticated} profile={profileData}/>
-                </Route>
-                <Route path='/room/:id' component={Classroom} />
-            </Switch>
-        </div>
-        <MobileMenu authenticated={authenticated} hasProfile={hasProfile} user={profileData.shortId}/>
+            <div className='container mx-auto px-2 pb-24 md:pb-2'>
+                <Header
+                    authenticated={authenticated}
+                    user={profileData.shortId}
+                    hasProfile={hasProfile}
+                />
+                <Switch>
+                    <Route path='/tutors'>
+                        <TutorList shortId={profileData.shortId} />
+                    </Route>
+                    <Route path='/users/:id' component={UserPage} />
+                    <Route exact path='/'>
+                        {home}
+                    </Route>
+                    <Route path='/create-profile'>
+                        <UserForm onSubmit={handleCreateProfile} hasProfile={hasProfile} />
+                    </Route>
+                    <Route path='/connections'>
+                        <Connections authenticated={authenticated} profile={profileData}/>
+                    </Route>
+                    <Route path='/room/:id' component={Classroom} />
+                </Switch>
+            </div>
+            <MobileMenu authenticated={authenticated} hasProfile={hasProfile} user={profileData.shortId}/>
         </>
     );
 };

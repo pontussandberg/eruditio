@@ -82,9 +82,14 @@ const Connections = ({ authenticated, profile }) => {
 
     const createContent = () => {
         const action = contentActions[page] || contentActions.default;
+        const content = action(data, getCons, goToRoom);
+        const display = content.length > 0
+            ? content
+            : <p className='p-16 text-gray-700'>Nothing to display...</p>;
+
         return (
             <div>
-                {action(data, getCons, goToRoom)}
+                {display}
             </div>
         );
     };
