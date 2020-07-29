@@ -28,6 +28,9 @@ button:focus {
 .bottom-1 {
     bottom: 1rem;
 }
+.bottom-half {
+    bottom: .5rem;
+}
 
 .min-h-1 {
     min-height: 600px;
