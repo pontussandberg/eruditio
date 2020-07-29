@@ -7,8 +7,8 @@ button:focus {
 }
 
 .view-button {
-    min-width: 107px;
-    max-width: 107px;
+    min-width: 109px;
+    max-width: 109px;
     min-height: 40px;
     max-height: 40px;
 }
@@ -56,3 +56,28 @@ button:focus {
 .green {
     background-color: #5bb85c !important;
 }
+
+.line-height-custom {
+    line-height: 1.2 !important;
+}
+
+.spinner {
+    border: 14px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #3182ce;
+    width: 100px;
+    height: 100px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+    margin: auto;
+}
+
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }

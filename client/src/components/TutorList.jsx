@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ProfileSection from './ProfileSection.jsx';
 import ScnBtnLink from './buttons/ScnBtnLink.jsx';
 import Button from './buttons/Button.jsx';
+import Spinner from './Spinner.jsx'
 import { addRequest, acceptRequest, cancelRequest } from '../lib/fetchers.js';
 
 const createList = (tutors, shortId, refresh) => (
@@ -20,7 +21,7 @@ const mapTutor = (shortId, refresh) => x => (
             <ProfileSection title='Languages' content={x.languages} />
         </div>
         <div className='flex flex-col'>
-            {x.shortId === shortId || x.connections.some(isInObj(shortId))
+            {!shortId || x.shortId === shortId || x.connections.some(isInObj(shortId))
                 ? null
                 : x.requests.some(y => y.tutor === shortId)
                     ? <Button text='Accept' classes='veiw-button mb-4' onClick={() => acceptRequest(x.shortId).then(refresh)} />
@@ -50,7 +51,7 @@ const TutorList = ({ shortId }) => {
     }, []);
 
     return list.length === 0
-        ? <p> is loading...</p>
+        ? <Spinner />
         : createList(list, shortId, getList);
 };
 
