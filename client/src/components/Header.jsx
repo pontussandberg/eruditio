@@ -15,8 +15,8 @@ const Header = ({ authenticated, user, hasProfile }) => (
         <div className='flex'>
             {authenticated
                 && hasProfile
-                && <Link 
-                    to={`/users/${user}`} 
+                && <Link
+                    to={`/users/${user}`}
                     className='mr-8 hidden md:block'
                 >
                     My Profile

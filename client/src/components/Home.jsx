@@ -17,7 +17,6 @@ const Home = ({ authenticated }) => (
                     ? <ScnBtnLink text='Connections' path='/connections' classes='mx-4 sm:w-32 sm:h-12 flex items-center justify-center' />
                     : null
                 }
-
             </div>
         </div>
         <img className='w-full md:w-2/4' src={logo} />

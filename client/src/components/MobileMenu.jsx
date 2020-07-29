@@ -15,14 +15,14 @@ const MobileMenu = ({ authenticated, hasProfile, user }) => (
             <img src={tutorsIcon} />
             <span className='text-xs'>Tutors</span>
         </Link>
-        {authenticated 
+        {authenticated
             && <Link className='mx-4 flex flex-col items-center' to='/connections'>
                 <img src={connectionsIcon} />
                 <span className='text-xs'>Connections</span>
             </Link>}
         {authenticated
             && hasProfile
-            && <Link 
+            && <Link
                 to={`/users/${user}`}
                 className='mx-4 flex flex-col items-center'
             >
@@ -30,6 +30,6 @@ const MobileMenu = ({ authenticated, hasProfile, user }) => (
                 <span className='text-xs'>Profile</span>
             </Link>}
     </nav>
-)
+);
 
-export default MobileMenu
+export default MobileMenu;

@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import Button from './buttons/Button.jsx';
 import DropDown from './DropDown.jsx';
-import FormHeader from './FormHeader.jsx'
+import FormHeader from './FormHeader.jsx';
 import Input from './Input.jsx';
-import validator from '../lib/validator.js'
-import { createProfile } from '../lib/fetchers.js'
-import { map, pipe } from '../lib/util.js'
+import validator from '../lib/validator.js';
+import { createProfile } from '../lib/fetchers.js';
+import { map, pipe } from '../lib/util.js';
 import roles from '../info/roles.json';
 import timezones from '../info/timezones.json';
 
@@ -19,19 +19,19 @@ const initState = {
     role: '',
     subjects: '',
     timezone: '',
-}
+};
 
-const trimValue = ([ key, value ]) => [ key, value.trim() ]
+const trimValue = ([ key, value ]) => [ key, value.trim() ];
 
 const removeWhiteSpaces = pipe(
     Object.entries,
     map(trimValue),
     Object.fromEntries
-)
+);
 
 const UserForm = ({ onSubmit, hasProfile }) => {
     const [ state, setState ] = useState(initState);
-    const [ error, setError ] = useState('')
+    const [ error, setError ] = useState('');
 
     const handleChange = event => {
         const { name, value } = event.target;
@@ -39,26 +39,26 @@ const UserForm = ({ onSubmit, hasProfile }) => {
             ...state,
             [name]: value,
         });
-        setError('')
+        setError('');
     };
 
     const handleSubmit = event => {
         event.preventDefault();
 
-        if (!validator(state)) setError('All fields are required!')
+        if (!validator(state)) setError('All fields are required!');
         else {
-            const profile = removeWhiteSpaces(state)
+            const profile = removeWhiteSpaces(state);
             createProfile(profile)
                 .then(() => onSubmit());
         }
     };
 
-    if (hasProfile) return <Redirect to='/' />
+    if (hasProfile) return <Redirect to='/' />;
 
     return (
         <div className='flex justify-center'>
             <form className='flex flex-col flex-wrap items-center'>
-                <FormHeader 
+                <FormHeader
                     title='Create a User Profile'
                     text='Tell us about you and what you are looking for.'
                     error={error}
@@ -66,7 +66,7 @@ const UserForm = ({ onSubmit, hasProfile }) => {
                 <div className='flex flex-wrap flex-col'>
                     <div className='flex flex-wrap justify-center'>
                         <Input onChange={handleChange} label='Name' name='name' />
-                        <Input 
+                        <Input
                             onChange={handleChange}
                             label='Last Name'
                             name='last-name'
@@ -90,19 +90,19 @@ const UserForm = ({ onSubmit, hasProfile }) => {
                     <Input onChange={handleChange} label='About me' name='about' />
                 </div>
                 <div className='flex flex-wrap justify-center'>
-                    <DropDown 
-                        onChange={handleChange} 
-                        label='Timezone' 
-                        name='timezone' 
-                        options={timezones} 
-                        init='Select your timezone' 
+                    <DropDown
+                        onChange={handleChange}
+                        label='Timezone'
+                        name='timezone'
+                        options={timezones}
+                        init='Select your timezone'
                     />
-                    <DropDown 
-                        onChange={handleChange} 
-                        label='Role' 
-                        name='role' 
-                        options={roles} 
-                        init='Select your role' 
+                    <DropDown
+                        onChange={handleChange}
+                        label='Role'
+                        name='role'
+                        options={roles}
+                        init='Select your role'
                     />
                 </div>
                 <Button
