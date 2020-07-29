@@ -1,6 +1,8 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import io from 'socket.io-client';
-import hangUp from '../media/end-call.svg';
+import audioSVG from '../media/audio.svg';
+import hangUpSVG from '../media/end-call.svg';
+import muteSVG from '../media/mute.svg';
 
 const VideoChat = ({ id, leaveRoom }) => {
     const userVideo = useRef();
@@ -9,6 +11,8 @@ const VideoChat = ({ id, leaveRoom }) => {
     const socketRef = useRef();
     const otherUser = useRef();
     const userStream = useRef();
+
+    const [audio, setAudio] = useState(true);
 
     const callUser = userId => {
         peerRef.current = createPeer(userId);
@@ -34,6 +38,11 @@ const VideoChat = ({ id, leaveRoom }) => {
 
         return peer;
     };
+
+    const handleMute = () => {
+        userStream.current.getAudioTracks()[0].enabled = !audio;
+        setAudio(!audio);
+    }
 
     const handleNegotiationNeededEvent = userId => {
         peerRef.current
@@ -140,9 +149,14 @@ const VideoChat = ({ id, leaveRoom }) => {
         <div className='bg-black flex flex-grow justify-center relative min-h-1 max-w-1'>
             <video autoPlay ref={userVideo} className='absolute top-1 right-1 w-1/5 h-1/5' muted='muted' />
             <video autoPlay ref={otherVideo} />
-            <button onClick={handleHangup} className='absolute m-auto bottom-1'>
-                <img src={hangUp} />
-            </button>
+            <div className='absolute m-auto bottom-half flex h-20'>
+                <button onClick={handleMute} className='mx-2'>
+                    <img src={audio ? audioSVG : muteSVG} alt={audio ? 'mute' : 'unmute'}/>
+                </button>
+                <button onClick={handleHangup} className='mx-2'>
+                    <img src={hangUpSVG} />
+                </button>
+            </div>
         </div>
     );
 };
