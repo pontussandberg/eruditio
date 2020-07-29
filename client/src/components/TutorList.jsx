@@ -21,7 +21,7 @@ const mapTutor = (shortId, refresh) => x => (
             <ProfileSection title='Languages' content={x.languages} />
         </div>
         <div className='flex flex-col'>
-            {x.shortId === shortId || x.connections.some(isInObj(shortId))
+            {!shortId || x.shortId === shortId || x.connections.some(isInObj(shortId))
                 ? null
                 : x.requests.some(y => y.tutor === shortId)
                     ? <Button text='Accept' classes='veiw-button mb-4' onClick={() => acceptRequest(x.shortId).then(refresh)} />

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import Button from './buttons/Button.jsx';
-import ConItem from './conItem.jsx';
+import ConItem from './ConItem.jsx';
 import ConnectionsNavLink from './buttons/ConnectionsNavLink.jsx';
 import ScnBtnLink from './buttons/ScnBtnLink.jsx';
+import Spinner from './Spinner.jsx'
 import {
     cancelRequest,
     acceptRequest,
@@ -105,7 +106,7 @@ const Connections = ({ authenticated, profile }) => {
     }, []);
 
     if (room) return <Redirect to={`/room/${room}`} />;
-    if (data === null) return null;
+    if (data === null) return <Spinner />;
 
     return (
         <section className='border-2 border-blue-600 lg:mx-32 md:mx-20'>

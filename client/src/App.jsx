@@ -36,7 +36,7 @@ const App = () => {
 
     const home = authenticated && !hasProfile
         ? <Redirect to='/create-profile' />
-        : <Home />;
+        : <Home authenticated={authenticated} />;
 
     return (
         <>
