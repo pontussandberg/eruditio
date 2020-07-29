@@ -4,6 +4,8 @@ import audioSVG from '../media/audio.svg';
 import hangUpSVG from '../media/end-call.svg';
 import muteSVG from '../media/mute.svg';
 
+const style = 'bg-black flex flex-grow justify-center relative min-h-1 max-w-1';
+
 const VideoChat = ({ id, leaveRoom }) => {
     const userVideo = useRef();
     const otherVideo = useRef();
@@ -39,6 +41,31 @@ const VideoChat = ({ id, leaveRoom }) => {
         return peer;
     };
 
+    const handleAnswer = message => {
+        const desc = new RTCSessionDescription(message.sdp);
+        peerRef.current
+            .setRemoteDescription(desc)
+            .catch(console.error);
+    };
+
+    const handleHangup = () => {
+        userStream.current.getTracks()
+            .forEach(x => x.stop());
+        if (peerRef.current) peerRef.current.close();
+        socketRef.current.emit('leave room', id);
+        leaveRoom();
+    };
+
+    const handleICECandidateEvent = event => {
+        if (event.candidate) {
+            const payload = {
+                target: otherUser.current,
+                candidate: event.candidate,
+            };
+            socketRef.current.emit('ice-candidate', payload);
+        }
+    };
+
     const handleMute = () => {
         userStream.current.getAudioTracks()[0].enabled = !audio;
         setAudio(!audio);
@@ -56,6 +83,14 @@ const VideoChat = ({ id, leaveRoom }) => {
                 };
                 socketRef.current.emit('offer', payload);
             })
+            .catch(console.error);
+    };
+
+    const handleNewICECandidateMsg = incoming => {
+        const candidate = new RTCIceCandidate(incoming);
+
+        peerRef.current
+            .addIceCandidate(candidate)
             .catch(console.error);
     };
 
@@ -81,41 +116,8 @@ const VideoChat = ({ id, leaveRoom }) => {
             });
     };
 
-    const handleAnswer = message => {
-        const desc = new RTCSessionDescription(message.sdp);
-        peerRef.current
-            .setRemoteDescription(desc)
-            .catch(console.error);
-    };
-
-    const handleICECandidateEvent = event => {
-        if (event.candidate) {
-            const payload = {
-                target: otherUser.current,
-                candidate: event.candidate,
-            };
-            socketRef.current.emit('ice-candidate', payload);
-        }
-    };
-
-    const handleNewICECandidateMsg = incoming => {
-        const candidate = new RTCIceCandidate(incoming);
-
-        peerRef.current
-            .addIceCandidate(candidate)
-            .catch(console.error);
-    };
-
     const handleTrackEvent = e => {
         otherVideo.current.srcObject = e.streams[0];
-    };
-
-    const handleHangup = () => {
-        userStream.current.getTracks()
-            .forEach(x => x.stop());
-        if (peerRef.current) peerRef.current.close();
-        socketRef.current.emit('leave room', id);
-        leaveRoom();
     };
 
     useEffect(() => {
@@ -146,12 +148,20 @@ const VideoChat = ({ id, leaveRoom }) => {
     }, []);
 
     return (
-        <div className='bg-black flex flex-grow justify-center relative min-h-1 max-w-1'>
-            <video autoPlay ref={userVideo} className='absolute top-1 right-1 w-1/5 h-1/5' muted='muted' />
+        <div className={style}>
+            <video
+                autoPlay
+                ref={userVideo}
+                className='absolute top-1 right-1 w-1/5 h-1/5'
+                muted='muted'
+            />
             <video autoPlay ref={otherVideo} />
             <div className='absolute m-auto bottom-half flex h-20'>
                 <button onClick={handleMute} className='mx-2'>
-                    <img src={audio ? audioSVG : muteSVG} alt={audio ? 'mute' : 'unmute'}/>
+                    <img
+                        src={audio ? audioSVG : muteSVG}
+                        alt={audio ? 'mute' : 'unmute'}
+                    />
                 </button>
                 <button onClick={handleHangup} className='mx-2'>
                     <img src={hangUpSVG} />
