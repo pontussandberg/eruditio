@@ -4,7 +4,7 @@ import Button from './buttons/Button.jsx';
 import ConItem from './ConItem.jsx';
 import ConnectionsNavLink from './buttons/ConnectionsNavLink.jsx';
 import ScnBtnLink from './buttons/ScnBtnLink.jsx';
-import Spinner from './Spinner.jsx'
+import Spinner from './Spinner.jsx';
 import {
     cancelRequest,
     acceptRequest,
@@ -13,31 +13,31 @@ import {
     getRooms
 } from '../lib/fetchers.js';
 
-const getRoom = (tutorId, rooms) => rooms.find(x => x.tutor === tutorId)
+const getRoom = (tutorId, rooms) => rooms.find(x => x.tutor === tutorId);
 
 const contentActions = {
     connections: ({ connections, rooms }, _, leave) => connections.map(con => {
         const room = getRoom(con.shortId, rooms);
-        const button = con.relation === 'student' 
+        const button = con.relation === 'student'
             ? <Button
                 text='Call'
                 onClick={() => createRoom({ student: con.shortId }).then(leave)}
                 classes='green px-6'
             />
             : room
-            ? <Button
-                text='Join Call'
-                onClick={() => leave(room.id)}
-                classes='green px-6'
-            />
-            : <div></div>
+                ? <Button
+                    text='Join Call'
+                    onClick={() => leave(room.id)}
+                    classes='green px-6'
+                />
+                : <div></div>;
 
         return (
             <ConItem key={con.shortId} con={con}>
                 {button}
                 <ScnBtnLink text='View Profile' path={`/users/${con.shortId}`} />
             </ConItem>
-        )
+        );
     }),
     outgoing: ({ outgoing }, refresh) => outgoing.map(con => (
         <ConItem key={con.shortId} con={con}>
@@ -92,10 +92,10 @@ const Connections = ({ authenticated, profile }) => {
     const getCons = () => Promise.all([
         fetch('/api/users/me/pending').then(x => x.json()),
         fetch('/api/users/me/connections').then(x => x.json()),
-        getRooms()
+        getRooms(),
     ])
         .then(([ pending, connections, rooms ]) => ({
-            ...pending, 
+            ...pending,
             connections,
             rooms,
         }))

@@ -12,7 +12,7 @@ const VideoChat = ({ id, leaveRoom }) => {
     const otherUser = useRef();
     const userStream = useRef();
 
-    const [audio, setAudio] = useState(true);
+    const [ audio, setAudio ] = useState(true);
 
     const callUser = userId => {
         peerRef.current = createPeer(userId);
@@ -42,7 +42,7 @@ const VideoChat = ({ id, leaveRoom }) => {
     const handleMute = () => {
         userStream.current.getAudioTracks()[0].enabled = !audio;
         setAudio(!audio);
-    }
+    };
 
     const handleNegotiationNeededEvent = userId => {
         peerRef.current
