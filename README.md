@@ -46,7 +46,7 @@ Once connected, student and tutor can have an online meeting via video call on t
     cd client && npm start
     ```
 
-* By default, the website will be running on port 3000. The node server will be running on port 5000, but you can change that in the [Webpack configuration](client/webpack.config.js) and the [Server's entry point](server/server.js).
+* By default, the website will be running on port 3000. The node server will be running on port 5000, but you can change those in the [Webpack configuration](client/webpack.config.js) and the [Server's entry point](server/server.js).
 
 ## Acknowledgements
 
