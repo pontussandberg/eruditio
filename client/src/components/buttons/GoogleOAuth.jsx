@@ -4,7 +4,7 @@ import googleSVG from '../../media/google.svg';
 const GoogleOAuth = () => (
     <a
         className='flex border rounded-sm bg-google border-google'
-        href='http://localhost:5000/auth/google'
+        href='/auth/google'
     >
         <img
             style={{ width: '36px' }}

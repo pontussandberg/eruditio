@@ -1,3 +1,4 @@
+const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimiseCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
@@ -6,7 +7,7 @@ module.exports = {
     entry: './src/index.jsx',
     output: {
         filename: 'app.bundle.js',
-        path: __dirname + '/build',
+        path: path.resolve('../server/src/dist'),
         publicPath: '/',
     },
     devServer: {

@@ -1,4 +1,5 @@
 require('dotenv').config();
+const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
@@ -18,10 +19,12 @@ app.use(cookieSession({
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(express.static(path.resolve('src/dist')));
+
 app.use('/auth', auth);
 app.use('/api/users', users);
 app.use('/api/rooms', rooms);
 
-app.get('/', (req, res) => res.redirect('http://localhost:3000'));
+app.get('*', (req, res) => res.sendFile(path.resolve('src/dist/index.html')));
 
 module.exports = app;

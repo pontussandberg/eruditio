@@ -9,4 +9,4 @@ const io = socketIO(server).of('socket');
 
 io.on('connection', socket(io));
 
-server.listen(5000);
+server.listen(process.env.PORT || 5000);
