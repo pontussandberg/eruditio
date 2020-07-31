@@ -1,0 +1,27 @@
+{
+  "name": "eruditio",
+  "version": "1.0.0",
+  "description": "A tutoring platform created as a final project for [Salt](https://salt.study/).",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "cd server && npm i && node server.js",
+    "heroku-postbuild": "cd client && npm i && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arturjzapater/eruditio.git"
+  },
+  "keywords": [],
+  "contributors": [{
+    "name": "Artur J Zapater"
+  }, {
+    "name": "Kristina Mutalapove"
+  }, {
+    "name": "Pontus Sandberg"
+  }],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arturjzapater/eruditio/issues"
+  },
+  "homepage": "https://github.com/arturjzapater/eruditio#readme"
+}
