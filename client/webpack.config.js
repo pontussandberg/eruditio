@@ -39,12 +39,17 @@ module.exports = {
             }],
         },
         {
-            test: /\.(js|jsx)$/,
+            test: /\.(js|jsx|ts|tsx)$/,
             exclude: /node_modules/,
             use: {
                 loader: 'babel-loader',
                 options: {
-                    presets: [ 'minify', '@babel/preset-env', '@babel/preset-react' ],
+                    presets: [
+                        'minify',
+                        '@babel/preset-env',
+                        '@babel/preset-react',
+                        '@babel/preset-typescript',
+                    ],
                 },
             },
         },
@@ -56,6 +61,9 @@ module.exports = {
             },
         },
         ],
+    },
+    resolve: {
+        extensions: [ '.js', '.jsx', '.ts', '.tsx' ],
     },
     plugins: [
         new HtmlWebpackPlugin({

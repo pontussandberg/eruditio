@@ -12,13 +12,17 @@
     "url": "git+https://github.com/arturjzapater/eruditio.git"
   },
   "keywords": [],
-  "contributors": [{
-    "name": "Artur J Zapater"
-  }, {
-    "name": "Kristina Mutalapove"
-  }, {
-    "name": "Pontus Sandberg"
-  }],
+  "contributors": [
+    {
+      "name": "Artur J Zapater"
+    },
+    {
+      "name": "Kristina Mutalapova"
+    },
+    {
+      "name": "Pontus Sandberg"
+    }
+  ],
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/arturjzapater/eruditio/issues"

@@ -13,9 +13,13 @@ module.exports = {
         Atomics: 'readonly',
         SharedArrayBuffer: 'readonly',
     },
-    parser: 'babel-eslint',
+    parser: '@typescript-eslint/parser',
     parserOptions: {
         ecmaVersion: 2018,
+        ecmaFeatures: {
+            jsx: true,
+        },
+        sourceType: 'module',
     },
     settings: {
         react: {
