@@ -46,6 +46,6 @@ export interface DropDownProps {
 
 export interface HeaderProps {
     authenticated: boolean,
-    user: Profile,
+    user: string,
     hasProfile: boolean,
 }
