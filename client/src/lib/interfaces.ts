@@ -30,3 +30,8 @@ interface Connection {
     student: string
 }
 
+export interface Match {
+    match: {params: {id: string}},
+    history: Array<string>,
+}
+
