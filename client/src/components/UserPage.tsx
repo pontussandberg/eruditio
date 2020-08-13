@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Spinner from './Spinner';
+import { Profile, UserPageProps } from '../lib/interfaces';
 
-const UserPage = ({ match: { params: { id } } }) => {
-    const [user, setUser] = useState(null);
+const UserPage: React.FC<UserPageProps> = ({ match: { params: { id } } }) => {
+    const [ user, setUser ] = useState<Profile | null>(null);
 
     useEffect(() => {
         fetch(`/api/users/${id}`)

@@ -1,3 +1,7 @@
+export interface AuthProps {
+    authenticated: boolean
+}
+
 export interface ButtonProps {
     onClick: (event: React.MouseEvent) => void,
     text?: string,
@@ -66,6 +70,45 @@ export interface TutorCardProps {
 interface Connection {
     tutor: string,
     student: string
+}
+
+export interface ScnBtnLinkProps {
+    path: string,
+    text?: string,
+    classes?: string,
+}
+
+export interface ConnectedPerson {
+    'last-name': string,
+    name: string,
+    shortId: string,
+    relation: string
+}
+
+export interface ConnectionList {
+    connections: ConnectedPerson[],
+    outgoing: ConnectedPerson[],
+    incoming: ConnectedPerson[],
+    rooms: Room[]
+}
+
+export interface ConnectionsProps {
+    authenticated: boolean,
+    profile: Profile
+}
+
+export interface Room {
+    id: string,
+    tutor: string,
+    student: string
+}
+
+export interface UserPageProps {
+    match: {
+        params: {
+            id: string
+        }
+    }
 }
 
 export interface Match {
