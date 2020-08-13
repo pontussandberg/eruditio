@@ -1,10 +1,10 @@
 import React from 'react';
-import logoutIcon from '../../media/nav-icons/logout.svg';
+// import logoutIcon from '../../media/nav-icons/logout.svg';
 
-const LogOut = () => (
+const LogOut: React.FC = () => (
     <a href='/auth/logout'>
         <span className='hidden md:inline'>Logout</span>
-        <img className='inline md:hidden w-8' src={logoutIcon} />
+        {/* <img className='inline md:hidden w-8' src={logoutIcon} /> */}
     </a>
 );
 
