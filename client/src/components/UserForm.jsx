@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
-import Button from './buttons/Button.jsx';
-import DropDown from './DropDown.jsx';
-import FormHeader from './FormHeader.jsx';
-import Input from './Input.jsx';
+import Button from './buttons/Button';
+import DropDown from './DropDown';
+import FormHeader from './FormHeader';
+import Input from './Input';
 import validator from '../lib/validator.js';
 import { createProfile } from '../lib/fetchers.js';
 import { map, pipe } from '../lib/util.js';
@@ -21,7 +21,7 @@ const initState = {
     timezone: '',
 };
 
-const trimValue = ([ key, value ]) => [ key, value.trim() ];
+const trimValue = ([key, value]) => [key, value.trim()];
 
 const removeWhiteSpaces = pipe(
     Object.entries,
@@ -30,8 +30,8 @@ const removeWhiteSpaces = pipe(
 );
 
 const UserForm = ({ onSubmit, hasProfile }) => {
-    const [ state, setState ] = useState(initState);
-    const [ error, setError ] = useState('');
+    const [state, setState] = useState(initState);
+    const [error, setError] = useState('');
 
     const handleChange = event => {
         const { name, value } = event.target;

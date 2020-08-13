@@ -1,5 +1,5 @@
 import React from 'react';
-import VideoChat from './VideoChat.jsx';
+import VideoChat from './VideoChat';
 import { Match } from '../lib/interfaces';
 
 const Classroom: React.FC<Match> = ({ match: { params: { id } }, history }) => {

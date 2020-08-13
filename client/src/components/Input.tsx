@@ -1,4 +1,5 @@
 import React from 'react';
+import { InputProps } from '../lib/interfaces';
 
 const customStyles = {
     top: '-15px',
@@ -7,7 +8,7 @@ const customStyles = {
 
 const inputClasses = 'w-64 border-solid border-2 rounded border-blue-600 px-3 py-3 outline-none focus:border-blue-700';
 
-const Input = ({ label, name, onChange }) => (
+const Input: React.FC<InputProps> = ({ label, name, onChange }) => (
     <div className='flex flex-col relative mb-8 mx-4'>
         <label
             htmlFor={name}
