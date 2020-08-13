@@ -1,8 +1,8 @@
 import React from 'react';
 import VideoChat from './VideoChat';
+import { Match } from '../lib/interfaces';
 
-
-const Classroom = ({ match: { params: { id } }, history }) => {
+const Classroom: React.FC<Match> = ({ match: { params: { id } }, history }) => {
 
     const leaveRoom = () => history.push('/connections');
 

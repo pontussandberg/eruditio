@@ -23,7 +23,7 @@ export interface Profile {
     shortId: string,
     subjects: string,
     timezone: string,
-    'last-name': string,
+    'last-name'?: string,
 }
 
 export interface ScnBtnProps {
@@ -53,7 +53,7 @@ export interface FormHeaderProps {
 export interface InputProps {
     label: string,
     name: string,
-    onChange: (event: React.FormEvent),
+    onChange: (event: React.FormEvent) => void
 }
 
 export interface TutorCardProps {
@@ -68,3 +68,22 @@ interface Connection {
     student: string
 }
 
+export interface Match {
+    match: {params: {id: string}},
+    history: Array<string>,
+}
+
+export interface DropDownProps {
+    label: string,
+    name: string,
+    options: Array<{value: string, name: string}>,
+    init: string,
+    onChange: (event: React.ChangeEvent) => void,
+    multiple: boolean,
+}
+
+export interface HeaderProps {
+    authenticated: boolean,
+    user: string,
+    hasProfile: boolean,
+}

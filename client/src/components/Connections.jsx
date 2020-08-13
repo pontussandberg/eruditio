@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import Button from './buttons/Button.tsx';
-import ConItem from './ConItem.tsx';
+import Button from './buttons/Button';
+import ConItem from './ConItem';
 import ConnectionsNavLink from './buttons/ConnectionsNavLink';
 import ScnBtnLink from './buttons/ScnBtnLink';
 import Spinner from './Spinner';
