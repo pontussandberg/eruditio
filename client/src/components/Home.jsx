@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from '../media/logo2.svg';
-import ButtonLink from './buttons/ButtonLink.jsx';
-import ScnBtnLink from './buttons/ScnBtnLink.jsx';
+import ButtonLink from './buttons/ButtonLink';
+import ScnBtnLink from './buttons/ScnBtnLink';
 
 const Home = ({ authenticated }) => (
     <section className='flex flex-col md:flex-row justify-between md:mt-20'>

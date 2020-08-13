@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
-import Classroom from './components/Classroom.jsx';
-import Connections from './components/Connections.jsx';
-import Header from './components/Header.jsx';
-import Home from './components/Home.jsx';
-import UserForm from './components/UserForm.jsx';
-import UserPage from './components/UserPage.jsx';
-import TutorList from './components/TutorList.jsx';
-import MobileMenu from './components/MobileMenu.jsx';
+import Classroom from './components/Classroom';
+import Connections from './components/Connections';
+import Header from './components/Header';
+import Home from './components/Home';
+import UserForm from './components/UserForm';
+import UserPage from './components/UserPage';
+import TutorList from './components/TutorList';
+import MobileMenu from './components/MobileMenu';
 import { Profile } from './lib/interfaces';
 
 const initProfile: Profile = {

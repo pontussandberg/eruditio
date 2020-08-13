@@ -1,7 +1,7 @@
 import React from 'react';
-import Button from './buttons/Button.jsx';
+import Button from './buttons/Button';
 import ProfileSection from './ProfileSection.jsx';
-import ScnBtnLink from './buttons/ScnBtnLink.jsx';
+import ScnBtnLink from './buttons/ScnBtnLink';
 import { addRequest, acceptRequest, cancelRequest } from '../lib/fetchers.js';
 
 const isInObj = elem => obj => obj.tutor === elem || obj.student === elem;

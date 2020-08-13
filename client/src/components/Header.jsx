@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Auth from './Auth.jsx';
+import Auth from './Auth';
 
 const Header = ({ authenticated, user, hasProfile }) => (
     <header className='flex justify-between items-center mb-6 h-16'>
