@@ -4,26 +4,34 @@ import audioSVG from '../media/audio.svg';
 import hangUpSVG from '../media/end-call.svg';
 import muteSVG from '../media/mute.svg';
 
+
 const style = 'bg-black flex flex-grow justify-center relative min-h-1 max-w-1';
 
-const VideoChat = ({ id, leaveRoom }) => {
+interface VideoChatProps {
+    id: string,
+    leaveRoom: CallableFunction,
+}
+
+const VideoChat: React.FC<VideoChatProps> = ({ id, leaveRoom }) => {
     const userVideo = useRef();
     const otherVideo = useRef();
-    const peerRef = useRef();
+    const peerRef = useRef<RTCPeerConnection>();
     const socketRef = useRef();
     const otherUser = useRef();
-    const userStream = useRef();
+    const userStream = useRef<MediaStream>();
 
     const [ audio, setAudio ] = useState(true);
 
-    const callUser = userId => {
+    const callUser = (userId: string) : void => {
+        if (!peerRef || !peerRef.hasOwnProperty('current')) return;
+        if (!userStream || !userStream.hasOwnProperty('current')) return;
         peerRef.current = createPeer(userId);
         userStream.current
             .getTracks()
             .forEach(track => peerRef.current.addTrack(track, userStream.current));
     };
 
-    const createPeer = userId => {
+    const createPeer = (userId: string) : RTCPeerConnection => {
         const peer = new RTCPeerConnection({
             iceServers: [{
                 urls: 'stun:stun.stunprotocol.org',
@@ -41,8 +49,9 @@ const VideoChat = ({ id, leaveRoom }) => {
         return peer;
     };
 
-    const handleAnswer = message => {
+    const handleAnswer = (message: { sdp: RTCSessionDescriptionInit }) => {
         const desc = new RTCSessionDescription(message.sdp);
+        if (!peerRef) return; 
         peerRef.current
             .setRemoteDescription(desc)
             .catch(console.error);

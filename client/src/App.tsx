@@ -33,7 +33,6 @@ const App: React.FC = () => {
     let { pathname } = useLocation();
 
     const setProfileInfo = (data: Profile): void => {
-        console.log(data);
         setHasProfile(data.hasProfile);
         setAuthenticated(true);
         setProfileData(data);

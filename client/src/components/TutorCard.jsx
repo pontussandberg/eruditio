@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from './buttons/Button';
-import ProfileSection from './ProfileSection.jsx';
+import ProfileSection from './ProfileSection';
 import ScnBtnLink from './buttons/ScnBtnLink';
 import { addRequest, acceptRequest, cancelRequest } from '../lib/fetchers.js';
 

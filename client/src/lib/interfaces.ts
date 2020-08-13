@@ -73,3 +73,23 @@ export interface UserPageProps {
         }
     }
 }
+
+export interface Match {
+    match: {params: {id: string}},
+    history: Array<string>,
+}
+
+export interface DropDownProps {
+    label: string,
+    name: string,
+    options: Array<{value: string, name: string}>,
+    init: string,
+    onChange: (event: React.ChangeEvent) => void,
+    multiple: boolean,
+}
+
+export interface HeaderProps {
+    authenticated: boolean,
+    user: string,
+    hasProfile: boolean,
+}
