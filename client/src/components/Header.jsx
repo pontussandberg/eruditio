@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Auth from './Auth.jsx';
+import Auth from './Auth';
 
 const Header = ({ authenticated, user, hasProfile }) => (
     <header className='flex justify-between items-center mb-6 h-16'>
@@ -10,8 +10,8 @@ const Header = ({ authenticated, user, hasProfile }) => (
         <nav className='hidden md:flex items-center'>
             <Link className='mx-4' to='/'>Home</Link>
             <Link className='mx-4' to='/tutors'>Tutors</Link>
-            { authenticated
-            && <Link className='mx-4' to='/connections'>Connections</Link> }
+            {authenticated
+                && <Link className='mx-4' to='/connections'>Connections</Link>}
         </nav>
         <div className='flex'>
             {authenticated
@@ -22,7 +22,7 @@ const Header = ({ authenticated, user, hasProfile }) => (
                 >
                     My Profile
                 </Link>}
-            <Auth authenticated={authenticated}/>
+            <Auth authenticated={authenticated} />
         </div>
     </header>
 );

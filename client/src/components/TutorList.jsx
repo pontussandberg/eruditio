@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Spinner from './Spinner.jsx';
-import TutorCard from './TutorCard.jsx';
+import Spinner from './Spinner';
+import TutorCard from './TutorCard';
 
 const createList = (tutors, shortId, refresh) => (
     <section className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-8'>
@@ -13,7 +13,7 @@ const mapTutor = (shortId, refresh) => x => (
 );
 
 const TutorList = ({ shortId }) => {
-    const [ list, setList ] = useState([]);
+    const [list, setList] = useState([]);
 
     const getList = () => fetch('/api/users/tutors')
         .then(res => res.json())

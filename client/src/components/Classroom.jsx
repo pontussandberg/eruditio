@@ -1,5 +1,5 @@
 import React from 'react';
-import VideoChat from './VideoChat.jsx';
+import VideoChat from './VideoChat';
 
 
 const Classroom = ({ match: { params: { id } }, history }) => {

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import Spinner from './Spinner.jsx';
+import Spinner from './Spinner';
 
 const UserPage = ({ match: { params: { id } } }) => {
-    const [ user, setUser ] = useState(null);
+    const [user, setUser] = useState(null);
 
     useEffect(() => {
         fetch(`/api/users/${id}`)

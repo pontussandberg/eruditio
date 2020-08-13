@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
-import Classroom from './components/Classroom.jsx';
-import Connections from './components/Connections.jsx';
-import Header from './components/Header.jsx';
-import Home from './components/Home.jsx';
-import UserForm from './components/UserForm.jsx';
-import UserPage from './components/UserPage.jsx';
-import TutorList from './components/TutorList.jsx';
-import MobileMenu from './components/MobileMenu.jsx';
+import Classroom from './components/Classroom';
+import Connections from './components/Connections';
+import Header from './components/Header';
+import Home from './components/Home';
+import UserForm from './components/UserForm';
+import UserPage from './components/UserPage';
+import TutorList from './components/TutorList';
+import MobileMenu from './components/MobileMenu';
 import { Profile } from './lib/interfaces';
 
 const initProfile: Profile = {
@@ -26,9 +26,9 @@ const initProfile: Profile = {
 }
 
 const App: React.FC = () => {
-    const [ authenticated, setAuthenticated ] = useState(false);
-    const [ hasProfile, setHasProfile ] = useState(false);
-    const [ profileData, setProfileData ] = useState(initProfile);
+    const [authenticated, setAuthenticated] = useState(false);
+    const [hasProfile, setHasProfile] = useState(false);
+    const [profileData, setProfileData] = useState(initProfile);
 
     let { pathname } = useLocation();
 
@@ -49,7 +49,7 @@ const App: React.FC = () => {
                 : setAuthenticated(false)
             )
             .catch(console.error);
-    }, [ pathname ]);
+    }, [pathname]);
 
     const home = authenticated && !hasProfile
         ? <Redirect to='/create-profile' />
@@ -75,12 +75,12 @@ const App: React.FC = () => {
                         <UserForm onSubmit={handleCreateProfile} hasProfile={hasProfile} />
                     </Route>
                     <Route path='/connections'>
-                        <Connections authenticated={authenticated} profile={profileData}/>
+                        <Connections authenticated={authenticated} profile={profileData} />
                     </Route>
                     <Route path='/room/:id' component={Classroom} />
                 </Switch>
             </div>
-            <MobileMenu authenticated={authenticated} hasProfile={hasProfile} user={profileData.shortId}/>
+            <MobileMenu authenticated={authenticated} hasProfile={hasProfile} user={profileData.shortId} />
         </>
     );
 };
