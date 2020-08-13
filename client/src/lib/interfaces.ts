@@ -35,3 +35,11 @@ export interface Match {
     history: Array<string>,
 }
 
+export interface DropDownProps {
+    label: string,
+    name: string,
+    options: Array<{value: string, name: string}>,
+    init: string,
+    onChange: (event: React.ChangeEvent) => void,
+    multiple: boolean,
+}
