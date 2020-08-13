@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
-import Button from './buttons/Button.jsx';
-import DropDown from './DropDown.jsx';
-import FormHeader from './FormHeader.jsx';
-import Input from './Input.jsx';
+import Button from './buttons/Button';
+import DropDown from './DropDown';
+import FormHeader from './FormHeader';
+import Input from './Input';
 import validator from '../lib/validator.js';
 import { createProfile } from '../lib/fetchers.js';
 import { map, pipe } from '../lib/util.js';

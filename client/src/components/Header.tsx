@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Auth from './Auth.jsx';
-import { HeaderProps} from '../lib/interfaces';
+import Auth from './Auth';
+import { HeaderProps } from '../lib/interfaces';
 
 
 

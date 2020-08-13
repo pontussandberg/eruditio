@@ -1,5 +1,5 @@
 import React from 'react';
-import googleSVG from                                             ;
+// import googleSVG from                                             ;
 
 const GoogleOAuth: React.FC = () => (
     <a
@@ -9,7 +9,7 @@ const GoogleOAuth: React.FC = () => (
         <img
             style={{ width: '36px' }}
             className='bg-white p-2 rounded-sm'
-            src={googleSVG}
+            // src={googleSVG}
         />
         <span className='text-sm text-white font-semibold p-2'>
             Sign in with Google

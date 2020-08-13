@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import Button from './buttons/Button.jsx';
-import ConItem from './ConItem.jsx';
-import ConnectionsNavLink from './buttons/ConnectionsNavLink.jsx';
-import ScnBtnLink from './buttons/ScnBtnLink.jsx';
-import Spinner from './Spinner.jsx';
+import Button from './buttons/Button';
+import ConItem from './ConItem';
+import ConnectionsNavLink from './buttons/ConnectionsNavLink';
+import ScnBtnLink from './buttons/ScnBtnLink';
+import Spinner from './Spinner';
 import {
     cancelRequest,
     acceptRequest,
