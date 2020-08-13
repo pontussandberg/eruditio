@@ -43,3 +43,9 @@ export interface DropDownProps {
     onChange: (event: React.ChangeEvent) => void,
     multiple: boolean,
 }
+
+export interface HeaderProps {
+    authenticated: Boolean,
+    user: Profile,
+    hasProfile: Boolean,
+}
