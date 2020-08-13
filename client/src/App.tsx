@@ -26,9 +26,9 @@ const initProfile: Profile = {
 }
 
 const App: React.FC = () => {
-    const [ authenticated, setAuthenticated ] = useState(false);
-    const [ hasProfile, setHasProfile ] = useState(false);
-    const [ profileData, setProfileData ] = useState(initProfile);
+    const [authenticated, setAuthenticated] = useState(false);
+    const [hasProfile, setHasProfile] = useState(false);
+    const [profileData, setProfileData] = useState(initProfile);
 
     let { pathname } = useLocation();
 
@@ -48,7 +48,7 @@ const App: React.FC = () => {
                 : setAuthenticated(false)
             )
             .catch(console.error);
-    }, [ pathname ]);
+    }, [pathname]);
 
     const home = authenticated && !hasProfile
         ? <Redirect to='/create-profile' />
@@ -74,12 +74,12 @@ const App: React.FC = () => {
                         <UserForm onSubmit={handleCreateProfile} hasProfile={hasProfile} />
                     </Route>
                     <Route path='/connections'>
-                        <Connections authenticated={authenticated} profile={profileData}/>
+                        <Connections authenticated={authenticated} profile={profileData} />
                     </Route>
                     <Route path='/room/:id' component={Classroom} />
                 </Switch>
             </div>
-            <MobileMenu authenticated={authenticated} hasProfile={hasProfile} user={profileData.shortId}/>
+            <MobileMenu authenticated={authenticated} hasProfile={hasProfile} user={profileData.shortId} />
         </>
     );
 };

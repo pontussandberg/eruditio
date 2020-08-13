@@ -63,16 +63,16 @@ const contentActions = {
             <ScnBtnLink text='View Profile' path={`/users/${con.shortId}`} />
         </ConItem>
     )),
-    default: () => {},
+    default: () => { },
 };
 
 const Connections = ({ authenticated, profile }) => {
-    if(!authenticated) return <Redirect to='/' />;
-    if(!profile.hasProfile) return <Redirect to='/create-profile' />;
+    if (!authenticated) return <Redirect to='/' />;
+    if (!profile.hasProfile) return <Redirect to='/create-profile' />;
 
-    const [ page, setPage ] = useState('connections');
-    const [ data, setData ] = useState(null);
-    const [ room, setRoom ] = useState(null);
+    const [page, setPage] = useState('connections');
+    const [data, setData] = useState(null);
+    const [room, setRoom] = useState(null);
 
     const goToRoom = id => setRoom(id);
 
@@ -99,7 +99,7 @@ const Connections = ({ authenticated, profile }) => {
         fetch('/api/users/me/connections').then(x => x.json()),
         getRooms(),
     ])
-        .then(([ pending, connections, rooms ]) => ({
+        .then(([pending, connections, rooms]) => ({
             ...pending,
             connections,
             rooms,
@@ -127,11 +127,11 @@ const Connections = ({ authenticated, profile }) => {
                 />
 
                 {profile.role === 'tutor'
-                && <ConnectionsNavLink
-                    onClick={() => setPage('incoming')}
-                    text={'Incoming'}
-                    classes={getBtnClasses('incoming')}
-                />}
+                    && <ConnectionsNavLink
+                        onClick={() => setPage('incoming')}
+                        text={'Incoming'}
+                        classes={getBtnClasses('incoming')}
+                    />}
             </nav>
 
             {createContent()}
