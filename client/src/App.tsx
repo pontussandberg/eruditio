@@ -8,21 +8,38 @@ import UserForm from './components/UserForm.jsx';
 import UserPage from './components/UserPage.jsx';
 import TutorList from './components/TutorList.jsx';
 import MobileMenu from './components/MobileMenu.jsx';
+import { Profile } from './lib/interfaces';
 
-const App = () => {
+const initProfile: Profile = {
+    about: '',
+    connections: [],
+    contact: '',
+    hasProfile: false,
+    languages: '',
+    lastName: '',
+    name: '',
+    requests: [],
+    role: '',
+    shortId: '',
+    subjects: '',
+    timezone: ''
+}
+
+const App: React.FC = () => {
     const [ authenticated, setAuthenticated ] = useState(false);
     const [ hasProfile, setHasProfile ] = useState(false);
-    const [ profileData, setProfileData ] = useState({});
+    const [ profileData, setProfileData ] = useState(initProfile);
 
     let { pathname } = useLocation();
 
-    const setProfileInfo = data => {
+    const setProfileInfo = (data: Profile): void => {
+        console.log(data);
         setHasProfile(data.hasProfile);
         setAuthenticated(true);
         setProfileData(data);
     };
 
-    const handleCreateProfile = () => setHasProfile(true);
+    const handleCreateProfile = (): void => setHasProfile(true);
 
     useEffect(() => {
         fetch('/api/users/me')

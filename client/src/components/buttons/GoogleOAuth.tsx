@@ -1,7 +1,7 @@
 import React from 'react';
-import googleSVG from '../../media/google.svg';
+import googleSVG from                                             ;
 
-const GoogleOAuth = () => (
+const GoogleOAuth: React.FC = () => (
     <a
         className='flex border rounded-sm bg-google border-google'
         href='/auth/google'
