@@ -38,7 +38,7 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit, hasProfile }) => {
     const [ state, setState ] = useState(initState);
     const [ error, setError ] = useState('');
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
         const { name, value } = event.target;
         setState({
             ...state,
