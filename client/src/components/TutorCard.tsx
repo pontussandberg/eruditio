@@ -2,7 +2,7 @@ import React from 'react';
 import Button from './buttons/Button';
 import ProfileSection from './ProfileSection';
 import ScnBtnLink from './buttons/ScnBtnLink';
-import { addRequest, acceptRequest, cancelRequest } from '../lib/fetchers.js';
+import { addRequest, acceptRequest, cancelRequest } from '../lib/fetchers';
 import { Profile } from '../lib/interfaces';
 import { TutorCardProps } from '../lib/interfaces';
 

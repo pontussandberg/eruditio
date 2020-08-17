@@ -1,5 +1,5 @@
 import React from 'react';
-// import logo from '../media/logo2.svg';
+import logo from '../media/logo2.svg';
 import ButtonLink from './buttons/ButtonLink';
 import ScnBtnLink from './buttons/ScnBtnLink';
 
@@ -31,7 +31,7 @@ const Home: React.FC<{ authenticated: boolean }> = ({ authenticated }) => (
                 }
             </div>
         </div>
-        {/* <img className='w-full md:w-2/4' src={logo} /> */}
+        <img className='w-full md:w-2/4' src={logo} />
     </section>
 );
 

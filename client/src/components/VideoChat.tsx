@@ -1,8 +1,8 @@
-import React, { useRef, useEffect, useState, MutableRefObject } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import io from 'socket.io-client';
-// import audioSVG from '../media/audio.svg';
-// import hangUpSVG from '../media/end-call.svg';
-// import muteSVG from '../media/mute.svg';
+import audioSVG from '../media/audio.svg';
+import hangUpSVG from '../media/end-call.svg';
+import muteSVG from '../media/mute.svg';
 
 
 const style = 'bg-black flex flex-grow justify-center relative min-h-1 max-w-1';
@@ -73,7 +73,6 @@ const VideoChat: React.FC<VideoChatProps> = ({ id, leaveRoom }) => {
                 socketRef.current.emit('leave room', id);
                 leaveRoom();
             }
-            
         }
     };
 
@@ -101,7 +100,7 @@ const VideoChat: React.FC<VideoChatProps> = ({ id, leaveRoom }) => {
             peerRef.current
                 .createOffer()
                 .then(offer => {
-                    if (peerRef?.current) peerRef.current.setLocalDescription(offer)
+                    if (peerRef?.current) return peerRef.current.setLocalDescription(offer)
                 })
                 .then(() => {
                     if (peerRef?.current && socketRef?.current) {
@@ -205,12 +204,12 @@ const VideoChat: React.FC<VideoChatProps> = ({ id, leaveRoom }) => {
             <div className='absolute m-auto bottom-half flex h-20'>
                 <button onClick={handleMute} className='mx-2'>
                     <img
-                        // src={audio ? audioSVG : muteSVG}
+                        src={audio ? audioSVG : muteSVG}
                         alt={audio ? 'mute' : 'unmute'}
                     />
                 </button>
                 <button onClick={handleHangup} className='mx-2'>
-                    {/* <img src={hangUpSVG} /> */}
+                    <img src={hangUpSVG} />
                 </button>
             </div>
         </div>

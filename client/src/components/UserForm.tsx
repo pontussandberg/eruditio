@@ -5,7 +5,7 @@ import DropDown from './DropDown';
 import FormHeader from './FormHeader';
 import Input from './Input';
 import validator from '../lib/validator.js';
-import { createProfile } from '../lib/fetchers.js';
+import { createProfile } from '../lib/fetchers';
 import { map, pipe } from '../lib/util.js';
 import roles from '../info/roles.json';
 import timezones from '../info/timezones.json';

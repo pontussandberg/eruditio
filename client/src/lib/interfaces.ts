@@ -1,3 +1,5 @@
+import React from 'react';
+
 export interface AuthProps {
     authenticated: boolean
 }
@@ -44,7 +46,7 @@ export interface ConItemProps {
 interface Con {
     'last-name': string,
     name: string,
-    requests: { student: string, tutor: string }[],
+    requests?: { student: string, tutor: string }[],
     shortId: string,
 }
 

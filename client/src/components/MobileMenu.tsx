@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-// import homeIcon from '../media/nav-icons/home.svg';
-// import tutorsIcon from '../media/nav-icons/tutors.svg';
-// import profileIcon from '../media/nav-icons/profile.svg';
-// import connectionsIcon from '../media/nav-icons/connections.svg';
+import homeIcon from '../media/nav-icons/home.svg';
+import tutorsIcon from '../media/nav-icons/tutors.svg';
+import profileIcon from '../media/nav-icons/profile.svg';
+import connectionsIcon from '../media/nav-icons/connections.svg';
 import { HeaderProps } from '../lib/interfaces';
 
 const navStyle = 'md:hidden flex items-center justify-around fixed bottom-0 left-0 w-full h-20 bg-blue-400 text-white';
@@ -11,16 +11,16 @@ const navStyle = 'md:hidden flex items-center justify-around fixed bottom-0 left
 const MobileMenu: React.FC<HeaderProps> = ({ authenticated, hasProfile, user }) => (
     <nav className={navStyle}>
         <Link className='mx-4 flex flex-col items-center' to='/'>
-            {/* <img src={homeIcon} /> */}
+            <img src={homeIcon} />
             <span className='text-xs'>Home</span>
         </Link>
         <Link className='mx-4 flex flex-col items-center' to='/tutors'>
-            {/* <img src={tutorsIcon} /> */}
+            <img src={tutorsIcon} />
             <span className='text-xs'>Tutors</span>
         </Link>
         {authenticated
             && <Link className='mx-4 flex flex-col items-center' to='/connections'>
-                {/* <img src={connectionsIcon} /> */}
+                <img src={connectionsIcon} />
                 <span className='text-xs'>Connections</span>
             </Link>}
         {authenticated
@@ -29,7 +29,7 @@ const MobileMenu: React.FC<HeaderProps> = ({ authenticated, hasProfile, user }) 
                 to={`/users/${user}`}
                 className='mx-4 flex flex-col items-center'
             >
-                {/* <img src={profileIcon} /> */}
+                <img src={profileIcon} />
                 <span className='text-xs'>Profile</span>
             </Link>}
     </nav>

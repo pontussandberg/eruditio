@@ -11,7 +11,7 @@ import {
     declineRequest,
     createRoom,
     getRooms
-} from '../lib/fetchers.js';
+} from '../lib/fetchers';
 import { ConnectionList, ConnectionsProps, Room } from '../lib/interfaces';
 
 type leaveFn = (arg: Response | string) => any
