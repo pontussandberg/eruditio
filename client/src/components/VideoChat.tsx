@@ -1,8 +1,8 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, MutableRefObject } from 'react';
 import io from 'socket.io-client';
-import audioSVG from '../media/audio.svg';
-import hangUpSVG from '../media/end-call.svg';
-import muteSVG from '../media/mute.svg';
+// import audioSVG from '../media/audio.svg';
+// import hangUpSVG from '../media/end-call.svg';
+// import muteSVG from '../media/mute.svg';
 
 
 const style = 'bg-black flex flex-grow justify-center relative min-h-1 max-w-1';
@@ -13,25 +13,29 @@ interface VideoChatProps {
 }
 
 const VideoChat: React.FC<VideoChatProps> = ({ id, leaveRoom }) => {
-    const userVideo = useRef();
-    const otherVideo = useRef();
+    const userVideo = useRef<HTMLVideoElement>(null);
+    const otherVideo = useRef<HTMLVideoElement>(null);
     const peerRef = useRef<RTCPeerConnection>();
-    const socketRef = useRef();
-    const otherUser = useRef();
+    const socketRef = useRef<SocketIOClient.Socket>();
+    const otherUser = useRef<string>();
     const userStream = useRef<MediaStream>();
 
     const [ audio, setAudio ] = useState(true);
 
     const callUser = (userId: string) : void => {
-        if (!peerRef || !peerRef.hasOwnProperty('current')) return;
-        if (!userStream || !userStream.hasOwnProperty('current')) return;
-        peerRef.current = createPeer(userId);
-        userStream.current
-            .getTracks()
-            .forEach(track => peerRef.current.addTrack(track, userStream.current));
+        if (userStream?.current && peerRef?.current) {
+            peerRef.current = createPeer(userId);
+            userStream.current
+                .getTracks()
+                .forEach(track => {
+                    if (peerRef?.current && userStream?.current) {
+                        peerRef.current.addTrack(track, userStream.current)
+                    }
+                });
+        }
     };
 
-    const createPeer = (userId: string) : RTCPeerConnection => {
+    const createPeer = (userId?: string) : RTCPeerConnection => {
         const peer = new RTCPeerConnection({
             iceServers: [{
                 urls: 'stun:stun.stunprotocol.org',
@@ -51,107 +55,140 @@ const VideoChat: React.FC<VideoChatProps> = ({ id, leaveRoom }) => {
 
     const handleAnswer = (message: { sdp: RTCSessionDescriptionInit }) => {
         const desc = new RTCSessionDescription(message.sdp);
-        if (!peerRef) return; 
-        peerRef.current
-            .setRemoteDescription(desc)
-            .catch(console.error);
+        if (peerRef?.current) {
+            peerRef.current
+                .setRemoteDescription(desc)
+                .catch(console.error);
+        }
     };
+
+    
 
     const handleHangup = () => {
-        userStream.current.getTracks()
+        if (userStream?.current) {
+            userStream.current.getTracks()
             .forEach(x => x.stop());
-        if (peerRef.current) peerRef.current.close();
-        socketRef.current.emit('leave room', id);
-        leaveRoom();
+            if (peerRef.current) peerRef.current.close();
+            if (socketRef?.current) {
+                socketRef.current.emit('leave room', id);
+                leaveRoom();
+            }
+            
+        }
     };
 
-    const handleICECandidateEvent = event => {
+    const handleICECandidateEvent = (event: RTCPeerConnectionIceEvent) => {
         if (event.candidate) {
             const payload = {
                 target: otherUser.current,
                 candidate: event.candidate,
             };
-            socketRef.current.emit('ice-candidate', payload);
+            if (socketRef?.current) {
+               socketRef.current.emit('ice-candidate', payload);
+            }
         }
     };
 
     const handleMute = () => {
-        userStream.current.getAudioTracks()[0].enabled = !audio;
+        if (userStream?.current) {
+           userStream.current.getAudioTracks()[0].enabled = !audio;
         setAudio(!audio);
+        }
     };
 
-    const handleNegotiationNeededEvent = userId => {
-        peerRef.current
-            .createOffer()
-            .then(offer => peerRef.current.setLocalDescription(offer))
-            .then(() => {
-                const payload = {
-                    target: userId,
-                    caller: socketRef.current.id,
-                    sdp: peerRef.current.localDescription,
-                };
-                socketRef.current.emit('offer', payload);
-            })
-            .catch(console.error);
+    const handleNegotiationNeededEvent = (userId?: string) => {
+        if (peerRef?.current) {
+            peerRef.current
+                .createOffer()
+                .then(offer => {
+                    if (peerRef?.current) peerRef.current.setLocalDescription(offer)
+                })
+                .then(() => {
+                    if (peerRef?.current && socketRef?.current) {
+                        const payload = {
+                            target: userId,
+                            caller: socketRef.current.id,
+                            sdp: peerRef.current.localDescription,
+                        };
+                        socketRef.current.emit('offer', payload);
+                    }
+                })
+                .catch(console.error);
+        }
     };
 
-    const handleNewICECandidateMsg = incoming => {
+    const handleNewICECandidateMsg = (incoming: RTCIceCandidateInit) => {
         const candidate = new RTCIceCandidate(incoming);
 
-        peerRef.current
+        if (peerRef?.current) peerRef.current
             .addIceCandidate(candidate)
             .catch(console.error);
     };
 
-    const handleRecieveCall = incoming => {
+    const handleRecieveCall = (incoming: { sdp: RTCSessionDescriptionInit, caller: string }) => {
         peerRef.current = createPeer();
         const desc = new RTCSessionDescription(incoming.sdp);
         peerRef.current
             .setRemoteDescription(desc)
             .then(() => {
-                userStream.current
+                if (userStream?.current) userStream.current
                     .getTracks()
-                    .forEach(track => peerRef.current.addTrack(track, userStream.current));
+                    .forEach(track => {
+                        if (peerRef?.current && userStream?.current)
+                            peerRef.current.addTrack(track, userStream.current)
+                    });
             })
-            .then(() => peerRef.current.createAnswer())
-            .then(answer => peerRef.current.setLocalDescription(answer))
             .then(() => {
-                const payload = {
-                    target: incoming.caller,
-                    caller: socketRef.current.id,
-                    sdp: peerRef.current.localDescription,
-                };
-                socketRef.current.emit('answer', payload);
+                if (peerRef?.current)
+                    return peerRef.current.createAnswer()
+            })
+            .then(answer => {
+                if (peerRef?.current && answer)
+                    return peerRef.current.setLocalDescription(answer)
+            })
+            .then(() => {
+                if (socketRef?.current && peerRef?.current) {
+                    const payload = {
+                        target: incoming.caller,
+                        caller: socketRef.current.id,
+                        sdp: peerRef.current.localDescription,
+                    };
+                    socketRef.current.emit('answer', payload);
+                }
             });
     };
 
-    const handleTrackEvent = e => {
-        otherVideo.current.srcObject = e.streams[0];
+    const handleTrackEvent = (event: RTCTrackEvent) => {
+        if (otherVideo?.current)
+            otherVideo.current.srcObject = event.streams[0];
     };
 
     useEffect(() => {
         navigator.mediaDevices.getUserMedia({ audio: true, video: true })
             .then(stream => {
-                userVideo.current.srcObject = stream;
-                userStream.current = stream;
-                socketRef.current = io.connect('/socket');
+                if (userVideo?.current) {
+                    userVideo.current.srcObject = stream;
+                    userStream.current = stream;
+                    socketRef.current = io.connect('/socket');
 
-                socketRef.current.emit('join room', id);
+                    socketRef.current.emit('join room', id);
 
-                socketRef.current.on('start call', userId => {
-                    callUser(userId);
-                    otherUser.current = userId;
-                });
-                socketRef.current.on('user joined', userId => {
-                    otherUser.current = userId;
-                });
-                socketRef.current.on('offer', handleRecieveCall);
-                socketRef.current.on('answer', handleAnswer);
-                socketRef.current.on('ice-candidate', handleNewICECandidateMsg);
-                socketRef.current.on('user left', () => {
-                    otherVideo.current.srcObject = null;
-                });
-                socketRef.current.on('full room', leaveRoom);
+                    socketRef.current.on('start call', (userId: string) => {
+                        callUser(userId);
+                        otherUser.current = userId;
+                    });
+                    socketRef.current.on('user joined', (userId: string) => {
+                        otherUser.current = userId;
+                    });
+                    socketRef.current.on('offer', handleRecieveCall);
+                    socketRef.current.on('answer', handleAnswer);
+                    socketRef.current.on('ice-candidate', handleNewICECandidateMsg);
+                    socketRef.current.on('user left', () => {
+                        if (otherVideo?.current)
+                            otherVideo.current.srcObject = null;
+                    });
+                    socketRef.current.on('full room', leaveRoom);
+                }
             });
         return handleHangup;
     }, []);
@@ -162,18 +199,18 @@ const VideoChat: React.FC<VideoChatProps> = ({ id, leaveRoom }) => {
                 autoPlay
                 ref={userVideo}
                 className='absolute top-1 right-1 w-1/5 h-1/5'
-                muted='muted'
+                muted={true}
             />
             <video autoPlay ref={otherVideo} />
             <div className='absolute m-auto bottom-half flex h-20'>
                 <button onClick={handleMute} className='mx-2'>
                     <img
-                        src={audio ? audioSVG : muteSVG}
+                        // src={audio ? audioSVG : muteSVG}
                         alt={audio ? 'mute' : 'unmute'}
                     />
                 </button>
                 <button onClick={handleHangup} className='mx-2'>
-                    <img src={hangUpSVG} />
+                    {/* <img src={hangUpSVG} /> */}
                 </button>
             </div>
         </div>
