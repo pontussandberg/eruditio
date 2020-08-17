@@ -43,7 +43,7 @@ const handleJoinRoom = socket => id => {
 
 const handleLeaveRoom = socket => () => {
     socket.disconnect(true);
-    if (rooms[socket.room].length === 0) {
+    if (rooms[socket.room] && rooms[socket.room].length === 0) {
         db.deleteRoom(socket.room);
     }
 };
