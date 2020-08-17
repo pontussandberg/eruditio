@@ -29,7 +29,6 @@ const removeWhiteSpaces = pipe(
     Object.fromEntries
 );
 
-
 interface UserFormProps {
     onSubmit: CallableFunction,
     hasProfile: boolean
@@ -39,7 +38,7 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit, hasProfile }) => {
     const [ state, setState ] = useState(initState);
     const [ error, setError ] = useState('');
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
         const { name, value } = event.target;
         setState({
             ...state,
@@ -121,8 +120,4 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit, hasProfile }) => {
     );
 };
 
-<<<<<<< HEAD
 export default UserForm;
-=======
-export default UserForm;
->>>>>>> ts-merge

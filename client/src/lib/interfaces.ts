@@ -57,7 +57,7 @@ export interface FormHeaderProps {
 export interface InputProps {
     label: string,
     name: string,
-    onChange: (event: React.FormEvent) => void
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 export interface TutorCardProps {
@@ -121,8 +121,8 @@ export interface DropDownProps {
     name: string,
     options: Array<{value: string, name: string}>,
     init: string,
-    onChange: (event: React.ChangeEvent) => void,
-    multiple: boolean,
+    onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void,
+    multiple?: boolean,
 }
 
 export interface HeaderProps {
