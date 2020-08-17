@@ -21,15 +21,7 @@ const initState = {
     timezone: '',
 };
 
-<<<<<<< HEAD
-<<<<<<<< HEAD:client/src/components/UserForm.tsx
 const trimValue = ([ key, value ]: [ string, string ]) => [ key, value.trim() ];
-========
-const trimValue = ([key, value]) => [key, value.trim()];
->>>>>>>> ts-merge:client/src/components/UserForm.jsx
-=======
-const trimValue = ([ key, value ]: [ string, string ]) => [ key, value.trim() ];
->>>>>>> ts-merge
 
 const removeWhiteSpaces = pipe(
     Object.entries,
@@ -37,10 +29,7 @@ const removeWhiteSpaces = pipe(
     Object.fromEntries
 );
 
-<<<<<<< HEAD
-<<<<<<<< HEAD:client/src/components/UserForm.tsx
-=======
->>>>>>> ts-merge
+
 interface UserFormProps {
     onSubmit: CallableFunction,
     hasProfile: boolean
@@ -49,14 +38,6 @@ interface UserFormProps {
 const UserForm: React.FC<UserFormProps> = ({ onSubmit, hasProfile }) => {
     const [ state, setState ] = useState(initState);
     const [ error, setError ] = useState('');
-<<<<<<< HEAD
-========
-const UserForm = ({ onSubmit, hasProfile }) => {
-    const [state, setState] = useState(initState);
-    const [error, setError] = useState('');
->>>>>>>> ts-merge:client/src/components/UserForm.jsx
-=======
->>>>>>> ts-merge
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         const { name, value } = event.target;
