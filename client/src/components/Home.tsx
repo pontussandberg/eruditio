@@ -1,14 +1,15 @@
 import React from 'react';
 import logo from '../media/logo2.svg';
-import ButtonLink from './buttons/ButtonLink.jsx';
-import ScnBtnLink from './buttons/ScnBtnLink.jsx';
+import ButtonLink from './buttons/ButtonLink';
+import ScnBtnLink from './buttons/ScnBtnLink';
 
-const Home = ({ authenticated }) => (
+
+const Home: React.FC<{ authenticated: boolean }> = ({ authenticated }) => (
     <section className='flex flex-col md:flex-row justify-between md:mt-20'>
         <div className='md:mt-10 md:mb-0 mb-10'>
             <h2 className='text-3xl sm:text-4xl md:text-5xl line-height-custom'>
                 Welcome to <span className='text-blue-600'>Eruditio</span>,
-                <br/>
+                <br />
                 the platform for learning
             </h2>
             <p className='text-base sm:text-lg md:text-xl text-gray-700 mt-2'>

@@ -1,8 +1,10 @@
 import React from 'react';
-import GoogleOAuth from './buttons/GoogleOAuth.jsx';
-import LogOut from './buttons/LogOut.jsx';
+import GoogleOAuth from './buttons/GoogleOAuth';
+import LogOut from './buttons/LogOut';
+import { AuthProps } from '../lib/interfaces'
 
-const Auth = ({ authenticated }) => {
+
+const Auth: React.FC<AuthProps> = ({ authenticated }) => {
     const btns = authenticated
         ? <LogOut />
         : <GoogleOAuth />;

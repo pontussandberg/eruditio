@@ -1,17 +1,19 @@
 import React from 'react';
-import Button from './buttons/Button.jsx';
-import ProfileSection from './ProfileSection.jsx';
-import ScnBtnLink from './buttons/ScnBtnLink.jsx';
-import { addRequest, acceptRequest, cancelRequest } from '../lib/fetchers.js';
+import Button from './buttons/Button';
+import ProfileSection from './ProfileSection';
+import ScnBtnLink from './buttons/ScnBtnLink';
+import { addRequest, acceptRequest, cancelRequest } from '../lib/fetchers';
+import { Profile } from '../lib/interfaces';
+import { TutorCardProps } from '../lib/interfaces';
 
-const isInObj = elem => obj => obj.tutor === elem || obj.student === elem;
+const isInObj = (elem: string) => (obj: { student: string, tutor: string }) => obj.tutor === elem || obj.student === elem;
 
-const showBtns = (shortId, tutor) =>
+const showBtns = (shortId: string, tutor: Profile) =>
     !shortId
     || tutor.shortId === shortId
     || tutor.connections.some(isInObj(shortId));
 
-const TutorCard = ({ tutor, shortId, refresh }) => (
+const TutorCard: React.FC<TutorCardProps> = ({ tutor, shortId, refresh }) => (
     <div className='shadow p-6 rounded flex justify-between' key={tutor.shortId} >
         <div className='flex flex-col'>
             <h2 className='text-2xl font-semibold'>

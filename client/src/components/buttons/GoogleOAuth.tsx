@@ -1,5 +1,5 @@
 import React from 'react';
-import googleSVG from                                             ;
+import googleSVG from '../../media/google.svg';
 
 const GoogleOAuth: React.FC = () => (
     <a

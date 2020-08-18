@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
-import Button from './buttons/Button.jsx';
-import DropDown from './DropDown.jsx';
-import FormHeader from './FormHeader.jsx';
-import Input from './Input.jsx';
-import validator from '../lib/validator.js';
-import { createProfile } from '../lib/fetchers.js';
-import { map, pipe } from '../lib/util.js';
+import Button from './buttons/Button';
+import DropDown from './DropDown';
+import FormHeader from './FormHeader';
+import Input from './Input';
+import validator from '../lib/validator';
+import { createProfile } from '../lib/fetchers';
+import { map, pipe } from '../lib/util';
 import roles from '../info/roles.json';
 import timezones from '../info/timezones.json';
 
@@ -21,7 +21,7 @@ const initState = {
     timezone: '',
 };
 
-const trimValue = ([ key, value ]) => [ key, value.trim() ];
+const trimValue = ([ key, value ]: [ string, string ]) => [ key, value.trim() ];
 
 const removeWhiteSpaces = pipe(
     Object.entries,
@@ -29,11 +29,16 @@ const removeWhiteSpaces = pipe(
     Object.fromEntries
 );
 
-const UserForm = ({ onSubmit, hasProfile }) => {
+interface UserFormProps {
+    onSubmit: CallableFunction,
+    hasProfile: boolean
+}
+
+const UserForm: React.FC<UserFormProps> = ({ onSubmit, hasProfile }) => {
     const [ state, setState ] = useState(initState);
     const [ error, setError ] = useState('');
 
-    const handleChange = event => {
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
         const { name, value } = event.target;
         setState({
             ...state,
@@ -42,7 +47,7 @@ const UserForm = ({ onSubmit, hasProfile }) => {
         setError('');
     };
 
-    const handleSubmit = event => {
+    const handleSubmit = (event: React.MouseEvent): void => {
         event.preventDefault();
 
         if (!validator(state)) setError('All fields are required!');
@@ -109,7 +114,6 @@ const UserForm = ({ onSubmit, hasProfile }) => {
                     onClick={handleSubmit}
                     text='Create profile'
                     classes='w-56 mt-6'
-                    type='submit'
                 />
             </form>
         </div>

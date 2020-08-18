@@ -1,42 +1,47 @@
-const options = {
+interface RequestBody {
+    student: string,
+    tutor?: string,
+}
+
+const options: RequestInit = {
     credentials: 'include',
     headers: {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Credentials': true,
+        'Access-Control-Allow-Credentials': 'true',
     },
 };
 
-const acceptRequest = id => fetch('/api/users/me/pending/accept', {
+const acceptRequest = (id: string) => fetch('/api/users/me/pending/accept', {
     ...options,
     method: 'PUT',
     body: JSON.stringify({ id }),
 });
 
-const addRequest = body => fetch('/api/users/request', {
+const addRequest = (body: RequestBody) => fetch('/api/users/request', {
     ...options,
     method: 'POST',
     body: JSON.stringify(body),
 });
 
-const cancelRequest = id => fetch('/api/users/me/pending/cancel', {
+const cancelRequest = (id: string) => fetch('/api/users/me/pending/cancel', {
     ...options,
     method: 'PUT',
     body: JSON.stringify({ id }),
 });
 
-const createProfile = body => fetch('/api/users', {
+const createProfile = (body: RequestBody) => fetch('/api/users', {
     ...options,
     method: 'POST',
     body: JSON.stringify(body),
 });
 
-const createRoom = body => fetch('/api/rooms', {
+const createRoom = (body: RequestBody) => fetch('/api/rooms', {
     ...options,
     method: 'POST',
     body: JSON.stringify(body),
 }).then(res => res.json());
 
-const declineRequest = id => fetch('/api/users/me/pending/decline', {
+const declineRequest = (id: string) => fetch('/api/users/me/pending/decline', {
     ...options,
     method: 'PUT',
     body: JSON.stringify({ id }),
@@ -48,7 +53,7 @@ const getRooms = () => fetch('/api/rooms', {
 }).then(res => res.json());
 
 
-module.exports = {
+export {
     acceptRequest,
     addRequest,
     cancelRequest,

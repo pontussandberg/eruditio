@@ -4,10 +4,11 @@ import homeIcon from '../media/nav-icons/home.svg';
 import tutorsIcon from '../media/nav-icons/tutors.svg';
 import profileIcon from '../media/nav-icons/profile.svg';
 import connectionsIcon from '../media/nav-icons/connections.svg';
+import { HeaderProps } from '../lib/interfaces';
 
 const navStyle = 'md:hidden flex items-center justify-around fixed bottom-0 left-0 w-full h-20 bg-blue-400 text-white';
 
-const MobileMenu = ({ authenticated, hasProfile, user }) => (
+const MobileMenu: React.FC<HeaderProps> = ({ authenticated, hasProfile, user }) => (
     <nav className={navStyle}>
         <Link className='mx-4 flex flex-col items-center' to='/'>
             <img src={homeIcon} />
