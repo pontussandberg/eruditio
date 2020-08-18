@@ -4,12 +4,14 @@ module.exports = {
         commonjs: true,
         es6: true,
         node: true,
-        typescript: true,
     },
+    plugins: [
+        '@typescript-eslint',
+    ],
     extends: [
         'eslint:recommended',
         'plugin:react/recommended',
-        'plugin:@typescript-eslint/recommended'
+        'plugin:@typescript-eslint/recommended',
     ],
     globals: {
         Atomics: 'readonly',

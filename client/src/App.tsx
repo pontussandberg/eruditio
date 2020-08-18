@@ -22,15 +22,15 @@ const initProfile: Profile = {
     role: '',
     shortId: '',
     subjects: '',
-    timezone: ''
-}
+    timezone: '',
+};
 
 const App: React.FC = () => {
-    const [authenticated, setAuthenticated] = useState(false);
-    const [hasProfile, setHasProfile] = useState(false);
-    const [profileData, setProfileData] = useState(initProfile);
+    const [ authenticated, setAuthenticated ] = useState(false);
+    const [ hasProfile, setHasProfile ] = useState(false);
+    const [ profileData, setProfileData ] = useState(initProfile);
 
-    let { pathname } = useLocation();
+    const { pathname } = useLocation();
 
     const setProfileInfo = (data: Profile): void => {
         setHasProfile(data.hasProfile);
@@ -48,7 +48,7 @@ const App: React.FC = () => {
                 : setAuthenticated(false)
             )
             .catch(console.error);
-    }, [pathname]);
+    }, [ pathname ]);
 
     const home = authenticated && !hasProfile
         ? <Redirect to='/create-profile' />

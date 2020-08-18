@@ -60,5 +60,5 @@ export {
     createProfile,
     createRoom,
     declineRequest,
-    getRooms,
+    getRooms
 };

@@ -4,7 +4,6 @@ import Auth from './Auth';
 import { HeaderProps } from '../lib/interfaces';
 
 
-
 const Header: React.FC<HeaderProps> = ({ authenticated, user, hasProfile }) => (
     <header className='flex justify-between items-center mb-6 h-16'>
         <Link to='/'>

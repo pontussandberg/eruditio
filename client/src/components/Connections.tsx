@@ -14,15 +14,16 @@ import {
 } from '../lib/fetchers';
 import { ConnectionList, ConnectionsProps, Room } from '../lib/interfaces';
 
-type leaveFn = (arg: Response | string) => any
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type leaveFn = (arg: Response | string) => any;
 
 const getRoom = (tutorId: string, rooms: Room[]) => rooms.find(x => x.tutor === tutorId);
 
 const contentActions = {
     connections: (data: ConnectionList | null, _: CallableFunction, leave: leaveFn): React.ReactElement[] => {
-        if (data === null) return []
+        if (data === null) return [];
 
-        const { connections, rooms } = data
+        const { connections, rooms } = data;
         return connections.map(con => {
             const room = getRoom(con.shortId, rooms);
             const button = con.relation === 'student'
@@ -45,10 +46,10 @@ const contentActions = {
                     <ScnBtnLink text='View Profile' path={`/users/${con.shortId}`} />
                 </ConItem>
             );
-        })
+        });
     },
     outgoing: (data: ConnectionList | null, refresh: leaveFn): React.ReactElement[] => {
-        if (data === null) return []
+        if (data === null) return [];
 
         return data.outgoing.map(con => (
             <ConItem key={con.shortId} con={con}>
@@ -59,10 +60,10 @@ const contentActions = {
                 />
                 <ScnBtnLink text='View Profile' path={`/users/${con.shortId}`} />
             </ConItem>
-        ))
+        ));
     },
     incoming: (data: ConnectionList | null, refresh: leaveFn): React.ReactElement[] => {
-        if (data === null) return []
+        if (data === null) return [];
 
         return data.incoming.map(con => (
             <ConItem key={con.shortId} con={con}>
@@ -77,9 +78,34 @@ const contentActions = {
                 />
                 <ScnBtnLink text='View Profile' path={`/users/${con.shortId}`} />
             </ConItem>
-        ))
+        ));
     },
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     default: (): void => {},
+};
+
+const getBtnClasses = (btnName: string, page: string) => btnName === page
+    ? 'bg-white text-black'
+    : 'text-white';
+
+
+const createContent = ( page: keyof typeof contentActions,
+    data: ConnectionList | null,
+    goToRoom: leaveFn, getCons: leaveFn ) => {
+    const action = contentActions[page] || contentActions.default;
+    const content = action(data, getCons, goToRoom);
+
+    const display = content && content.length
+        ? content.length > 0
+            ? content
+            : <p className='p-16 text-gray-700'>Nothing to display...</p>
+        : null;
+
+    return (
+        <div>
+            {display}
+        </div>
+    );
 };
 
 const Connections: React.FC<ConnectionsProps> = ({ authenticated, profile }) => {
@@ -91,24 +117,6 @@ const Connections: React.FC<ConnectionsProps> = ({ authenticated, profile }) => 
     const [ room, setRoom ] = useState<string | null | Response>(null);
 
     const goToRoom = (id: string | Response): void => setRoom(id);
-
-    const getBtnClasses = (btnName: string) => btnName === page
-        ? 'bg-white text-black'
-        : 'text-white';
-
-    const createContent = () => {
-        const action = contentActions[page] || contentActions.default;
-        const content = action(data, getCons, goToRoom);
-        const display = content.length > 0
-            ? content
-            : <p className='p-16 text-gray-700'>Nothing to display...</p>;
-
-        return (
-            <div>
-                {display}
-            </div>
-        );
-    };
 
     const getCons = () => Promise.all([
         fetch('/api/users/me/pending').then(x => x.json()),
@@ -135,22 +143,22 @@ const Connections: React.FC<ConnectionsProps> = ({ authenticated, profile }) => 
                 <ConnectionsNavLink
                     onClick={() => setPage('connections')}
                     text={'Connections'}
-                    classes={getBtnClasses('connections')} />
+                    classes={getBtnClasses('connections', page)} />
                 <ConnectionsNavLink
                     onClick={() => setPage('outgoing')}
                     text={'Outgoing'}
-                    classes={getBtnClasses('outgoing')}
+                    classes={getBtnClasses('outgoing', page)}
                 />
 
                 {profile.role === 'tutor'
                 && <ConnectionsNavLink
                     onClick={() => setPage('incoming')}
                     text={'Incoming'}
-                    classes={getBtnClasses('incoming')}
+                    classes={getBtnClasses('incoming', page)}
                 />}
             </nav>
 
-            {createContent()}
+            {createContent(page, data, goToRoom, getCons)}
         </section>
     );
 };
