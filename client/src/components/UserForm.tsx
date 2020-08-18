@@ -4,9 +4,9 @@ import Button from './buttons/Button';
 import DropDown from './DropDown';
 import FormHeader from './FormHeader';
 import Input from './Input';
-import validator from '../lib/validator.js';
+import validator from '../lib/validator';
 import { createProfile } from '../lib/fetchers';
-import { map, pipe } from '../lib/util.js';
+import { map, pipe } from '../lib/util';
 import roles from '../info/roles.json';
 import timezones from '../info/timezones.json';
 
