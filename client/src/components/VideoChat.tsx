@@ -23,8 +23,8 @@ const VideoChat: React.FC<VideoChatProps> = ({ id, leaveRoom }) => {
     const [ audio, setAudio ] = useState(true);
 
     const callUser = (userId: string) : void => {
+        peerRef.current = createPeer(userId);
         if (userStream?.current && peerRef?.current) {
-            peerRef.current = createPeer(userId);
             userStream.current
                 .getTracks()
                 .forEach(track => {
@@ -90,8 +90,8 @@ const VideoChat: React.FC<VideoChatProps> = ({ id, leaveRoom }) => {
 
     const handleMute = () => {
         if (userStream?.current) {
-           userStream.current.getAudioTracks()[0].enabled = !audio;
-        setAudio(!audio);
+            userStream.current.getAudioTracks()[0].enabled = !audio;
+            setAudio(!audio);
         }
     };
 
