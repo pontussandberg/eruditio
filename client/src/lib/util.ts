@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+
 const everyPred = (...preds : Array<CallableFunction>) => (x: any): boolean => preds.every(pred => pred(x));
 
 type mapper = (value: any, index: number, array: Array<any>) => any;
