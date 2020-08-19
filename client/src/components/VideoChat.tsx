@@ -29,7 +29,7 @@ const VideoChat: React.FC<VideoChatProps> = ({ id, leaveRoom }) => {
                 .getTracks()
                 .forEach(track => {
                     if (peerRef?.current && userStream?.current) {
-                        peerRef.current.addTrack(track, userStream.current)
+                        peerRef.current.addTrack(track, userStream.current);
                     }
                 });
         }
@@ -62,12 +62,11 @@ const VideoChat: React.FC<VideoChatProps> = ({ id, leaveRoom }) => {
         }
     };
 
-    
 
     const handleHangup = () => {
         if (userStream?.current) {
             userStream.current.getTracks()
-            .forEach(x => x.stop());
+                .forEach(x => x.stop());
             if (peerRef.current) peerRef.current.close();
             if (socketRef?.current) {
                 socketRef.current.emit('leave room', id);
@@ -83,7 +82,7 @@ const VideoChat: React.FC<VideoChatProps> = ({ id, leaveRoom }) => {
                 candidate: event.candidate,
             };
             if (socketRef?.current) {
-               socketRef.current.emit('ice-candidate', payload);
+                socketRef.current.emit('ice-candidate', payload);
             }
         }
     };
@@ -100,7 +99,7 @@ const VideoChat: React.FC<VideoChatProps> = ({ id, leaveRoom }) => {
             peerRef.current
                 .createOffer()
                 .then(offer => {
-                    if (peerRef?.current) return peerRef.current.setLocalDescription(offer)
+                    if (peerRef?.current) return peerRef.current.setLocalDescription(offer);
                 })
                 .then(() => {
                     if (peerRef?.current && socketRef?.current) {
@@ -134,16 +133,16 @@ const VideoChat: React.FC<VideoChatProps> = ({ id, leaveRoom }) => {
                     .getTracks()
                     .forEach(track => {
                         if (peerRef?.current && userStream?.current)
-                            peerRef.current.addTrack(track, userStream.current)
+                            peerRef.current.addTrack(track, userStream.current);
                     });
             })
             .then(() => {
                 if (peerRef?.current)
-                    return peerRef.current.createAnswer()
+                    return peerRef.current.createAnswer();
             })
             .then(answer => {
                 if (peerRef?.current && answer)
-                    return peerRef.current.setLocalDescription(answer)
+                    return peerRef.current.setLocalDescription(answer);
             })
             .then(() => {
                 if (socketRef?.current && peerRef?.current) {
@@ -188,7 +187,8 @@ const VideoChat: React.FC<VideoChatProps> = ({ id, leaveRoom }) => {
                     });
                     socketRef.current.on('full room', leaveRoom);
                 }
-            });
+            })
+            .catch(() => leaveRoom());
         return handleHangup;
     }, []);
 

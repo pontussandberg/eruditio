@@ -4,12 +4,15 @@ module.exports = {
         commonjs: true,
         es6: true,
         node: true,
-        typescript: true,
+        mocha: true,
     },
+    plugins: [
+        '@typescript-eslint',
+    ],
     extends: [
         'eslint:recommended',
         'plugin:react/recommended',
-        'plugin:@typescript-eslint/recommended'
+        'plugin:@typescript-eslint/recommended',
     ],
     globals: {
         Atomics: 'readonly',
@@ -43,10 +46,6 @@ module.exports = {
         }],
         'no-prototype-builtins': 0,
         'no-trailing-spaces': 'error',
-        // 'no-unused-vars': [ 'error', {
-        //     args: 'after-used',
-        //     'argsIgnorePattern': '^_',
-        // }],
         'object-curly-spacing': [ 'error', 'always' ],
         'quotes': [ 'error', 'single' ],
         'semi': [ 'error', 'always' ],
