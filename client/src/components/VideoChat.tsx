@@ -187,7 +187,8 @@ const VideoChat: React.FC<VideoChatProps> = ({ id, leaveRoom }) => {
                     });
                     socketRef.current.on('full room', leaveRoom);
                 }
-            });
+            })
+            .catch(() => leaveRoom());
         return handleHangup;
     }, []);
 
